@@ -1,12 +1,13 @@
 import { mkdir, writeFile } from "node:fs/promises";
 
+const spokenCallsign = "9 Victor Bravo Charlie Alpha";
 const steps = [
-  ["contact-ground", "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one."],
-  ["taxi-readback", "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA."],
-  ["frequency-readback", "One one eight decimal four five, 9V-BCA."],
-  ["contact-tower", "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure."],
-  ["line-up-readback", "Line up and wait runway two one, 9V-BCA."],
-  ["takeoff-readback", "Cleared for takeoff runway two one, 9V-BCA."],
+  ["contact-ground", `Seletar Ground, ${spokenCallsign}, Cessna 172 at stand Charlie Six, request taxi runway two one.`],
+  ["taxi-readback", `Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, ${spokenCallsign}.`],
+  ["frequency-readback", `One one eight decimal four five, ${spokenCallsign}.`],
+  ["contact-tower", `Seletar Tower, ${spokenCallsign}, holding short at Whiskey One, runway two one, ready for departure.`],
+  ["line-up-readback", `Line up and wait runway two one, ${spokenCallsign}.`],
+  ["takeoff-readback", `Cleared for takeoff runway two one, ${spokenCallsign}.`],
 ];
 
 const cases = [];
@@ -14,8 +15,8 @@ for (const [stepId, phrase] of steps) {
   const correctVariants = [
     phrase,
     phrase.toUpperCase(),
-    phrase.replace("9V-BCA", "nine victor bravo charlie alpha"),
-    phrase.replace("9V-BCA", "niner victor bravo charlie alpha"),
+    phrase.replace(spokenCallsign, "nine victor bravo charlie alpha"),
+    phrase.replace(spokenCallsign, "niner victor bravo charlie alpha"),
     phrase.replaceAll(",", "").replaceAll(".", ""),
     `Roger, ${phrase}`,
     `${phrase} Wilco.`,
@@ -33,24 +34,24 @@ for (const [stepId, phrase] of steps) {
     audioProfile: ["clean-headset", "laptop-mic", "light-noise", "accent-variant", "hesitation"][index % 5],
   }));
 
-  const wrongCallsign = phrase.replace("9V-BCA", "9V-BCD");
-  const noCallsign = phrase.replace(/,?\s*9V-BCA\.?/, ".");
+  const wrongCallsign = phrase.replace(spokenCallsign, "9 Victor Bravo Charlie Delta");
+  const noCallsign = phrase.replace(new RegExp(`,?\\s*${spokenCallsign}\\.?`), ".");
   const wrongOperationalValue = stepId === "frequency-readback"
-    ? "One two one decimal six, 9V-BCA."
+    ? `One two one decimal six, ${spokenCallsign}.`
     : phrase.includes("two one")
       ? phrase.replace("two one", "zero three")
       : phrase.replace("request taxi", "request parking");
   const wrongVariants = [
     [wrongCallsign, 0.96, "CORRECTION_REQUIRED"],
     [noCallsign, 0.96, "CORRECTION_REQUIRED"],
-    ["9V-BCD, standby.", 0.96, "CORRECTION_REQUIRED"],
+    ["9 Victor Bravo Charlie Delta, standby.", 0.96, "CORRECTION_REQUIRED"],
     ["Say again.", 0.96, "CORRECTION_REQUIRED"],
     [wrongOperationalValue, 0.96, "CORRECTION_REQUIRED"],
     [phrase.split(",").slice(0, 1).join(","), 0.96, "CORRECTION_REQUIRED"],
     [phrase, 0.41, "CLARIFICATION_REQUIRED"],
     ["nine victor bravo charlie, roger", 0.96, "CORRECTION_REQUIRED"],
-    ["Unable, 9V-BCA.", 0.96, "CORRECTION_REQUIRED"],
-    ["Standby, 9V-BCA.", 0.96, "CORRECTION_REQUIRED"],
+    [`Unable, ${spokenCallsign}.`, 0.96, "CORRECTION_REQUIRED"],
+    [`Standby, ${spokenCallsign}.`, 0.96, "CORRECTION_REQUIRED"],
   ];
   wrongVariants.forEach(([transcript, confidence, expectedStatus], index) => cases.push({
     id: `${stepId}-safety-${index + 1}`,

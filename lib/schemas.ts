@@ -86,7 +86,11 @@ export const scenarioDefinitionSchema = z.object({
   id: z.string(),
   version: z.string(),
   airportDataVersion: z.string(),
-  aircraft: z.object({ type: z.literal("C172"), callsign: z.literal("9V-BCA") }),
+  aircraft: z.object({
+    type: z.literal("C172"),
+    callsign: z.literal("9V-BCA"),
+    spokenCallsign: z.literal("9 Victor Bravo Charlie Alpha"),
+  }),
   startPositionId: z.string(),
   routeIds: z.array(z.string()),
   initialState: scenarioStateSchema,

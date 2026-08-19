@@ -20,6 +20,17 @@ describe("WSSL scenario package", () => {
     expect(JSON.stringify(scenario)).not.toMatch(/STAND_C7|Echo Six|EC5|runway zero three/i);
   });
 
+  it("uses the phonetic callsign in every learner-facing ATC exchange", () => {
+    const spokenText = [
+      scenario.aircraft.spokenCallsign,
+      ...Object.values(scenario.routes).map((route) => route.completionControllerText),
+      ...scenario.steps.flatMap((step) => [step.instruction.approvedSpokenText, step.successControllerText]),
+    ];
+
+    expect(scenario.aircraft.spokenCallsign).toBe("9 Victor Bravo Charlie Alpha");
+    expect(spokenText.every((text) => !text.includes("9V-BCA"))).toBe(true);
+  });
+
   it("contains at least 120 labeled evaluation cases awaiting SME review", () => {
     expect(evaluationData.cases.length).toBeGreaterThanOrEqual(120);
     expect(evaluationData.reviewStatus).toBe("AWAITING_SME_LABEL_REVIEW");

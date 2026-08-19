@@ -5,7 +5,7 @@
     {
       "id": "contact-ground-correct-1",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -14,7 +14,7 @@
     {
       "id": "contact-ground-correct-2",
       "stepId": "contact-ground",
-      "transcript": "SELETAR GROUND, 9V-BCA, CESSNA 172 AT STAND CHARLIE SIX, REQUEST TAXI RUNWAY TWO ONE.",
+      "transcript": "SELETAR GROUND, 9 VICTOR BRAVO CHARLIE ALPHA, CESSNA 172 AT STAND CHARLIE SIX, REQUEST TAXI RUNWAY TWO ONE.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -41,7 +41,7 @@
     {
       "id": "contact-ground-correct-5",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground 9V-BCA Cessna 172 at stand Charlie Six request taxi runway two one",
+      "transcript": "Seletar Ground 9 Victor Bravo Charlie Alpha Cessna 172 at stand Charlie Six request taxi runway two one",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -50,7 +50,7 @@
     {
       "id": "contact-ground-correct-6",
       "stepId": "contact-ground",
-      "transcript": "Roger, Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Roger, Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -59,7 +59,7 @@
     {
       "id": "contact-ground-correct-7",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one. Wilco.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -68,7 +68,7 @@
     {
       "id": "contact-ground-correct-8",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway 21.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway 21.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -77,7 +77,7 @@
     {
       "id": "contact-ground-correct-9",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -86,7 +86,7 @@
     {
       "id": "contact-ground-correct-10",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -95,7 +95,7 @@
     {
       "id": "contact-ground-safety-1",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCD, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Delta, Cessna 172 at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -113,7 +113,7 @@
     {
       "id": "contact-ground-safety-3",
       "stepId": "contact-ground",
-      "transcript": "9V-BCD, standby.",
+      "transcript": "9 Victor Bravo Charlie Delta, standby.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -131,7 +131,7 @@
     {
       "id": "contact-ground-safety-5",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway zero three.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway zero three.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -149,7 +149,7 @@
     {
       "id": "contact-ground-safety-7",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -167,7 +167,7 @@
     {
       "id": "contact-ground-safety-9",
       "stepId": "contact-ground",
-      "transcript": "Unable, 9V-BCA.",
+      "transcript": "Unable, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -175,7 +175,7 @@
     {
       "id": "contact-ground-safety-10",
       "stepId": "contact-ground",
-      "transcript": "Standby, 9V-BCA.",
+      "transcript": "Standby, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -183,7 +183,7 @@
     {
       "id": "taxi-readback-correct-1",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -192,7 +192,7 @@
     {
       "id": "taxi-readback-correct-2",
       "stepId": "taxi-readback",
-      "transcript": "TAXI VIA WHISKEY PAPA TO HOLDING POINT WHISKEY ONE, HOLD SHORT OF RUNWAY TWO ONE, 9V-BCA.",
+      "transcript": "TAXI VIA WHISKEY PAPA TO HOLDING POINT WHISKEY ONE, HOLD SHORT OF RUNWAY TWO ONE, 9 VICTOR BRAVO CHARLIE ALPHA.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -219,7 +219,7 @@
     {
       "id": "taxi-readback-correct-5",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One hold short of runway two one 9V-BCA",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One hold short of runway two one 9 Victor Bravo Charlie Alpha",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -228,7 +228,7 @@
     {
       "id": "taxi-readback-correct-6",
       "stepId": "taxi-readback",
-      "transcript": "Roger, Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "transcript": "Roger, Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -237,7 +237,7 @@
     {
       "id": "taxi-readback-correct-7",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA. Wilco.",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -246,7 +246,7 @@
     {
       "id": "taxi-readback-correct-8",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway 21, 9V-BCA.",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway 21, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -255,7 +255,7 @@
     {
       "id": "taxi-readback-correct-9",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point W1, hold short of runway two one, 9V-BCA.",
+      "transcript": "Taxi via Whiskey Papa to holding point W1, hold short of runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -264,7 +264,7 @@
     {
       "id": "taxi-readback-correct-10",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via WP to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "transcript": "Taxi via WP to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -273,7 +273,7 @@
     {
       "id": "taxi-readback-safety-1",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCD.",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Delta.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -291,7 +291,7 @@
     {
       "id": "taxi-readback-safety-3",
       "stepId": "taxi-readback",
-      "transcript": "9V-BCD, standby.",
+      "transcript": "9 Victor Bravo Charlie Delta, standby.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -309,7 +309,7 @@
     {
       "id": "taxi-readback-safety-5",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway zero three, 9V-BCA.",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway zero three, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -327,7 +327,7 @@
     {
       "id": "taxi-readback-safety-7",
       "stepId": "taxi-readback",
-      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -345,7 +345,7 @@
     {
       "id": "taxi-readback-safety-9",
       "stepId": "taxi-readback",
-      "transcript": "Unable, 9V-BCA.",
+      "transcript": "Unable, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -353,7 +353,7 @@
     {
       "id": "taxi-readback-safety-10",
       "stepId": "taxi-readback",
-      "transcript": "Standby, 9V-BCA.",
+      "transcript": "Standby, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -361,7 +361,7 @@
     {
       "id": "frequency-readback-correct-1",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -370,7 +370,7 @@
     {
       "id": "frequency-readback-correct-2",
       "stepId": "frequency-readback",
-      "transcript": "ONE ONE EIGHT DECIMAL FOUR FIVE, 9V-BCA.",
+      "transcript": "ONE ONE EIGHT DECIMAL FOUR FIVE, 9 VICTOR BRAVO CHARLIE ALPHA.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -397,7 +397,7 @@
     {
       "id": "frequency-readback-correct-5",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five 9V-BCA",
+      "transcript": "One one eight decimal four five 9 Victor Bravo Charlie Alpha",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -406,7 +406,7 @@
     {
       "id": "frequency-readback-correct-6",
       "stepId": "frequency-readback",
-      "transcript": "Roger, One one eight decimal four five, 9V-BCA.",
+      "transcript": "Roger, One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -415,7 +415,7 @@
     {
       "id": "frequency-readback-correct-7",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCA. Wilco.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -424,7 +424,7 @@
     {
       "id": "frequency-readback-correct-8",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -433,7 +433,7 @@
     {
       "id": "frequency-readback-correct-9",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -442,7 +442,7 @@
     {
       "id": "frequency-readback-correct-10",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -451,7 +451,7 @@
     {
       "id": "frequency-readback-safety-1",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCD.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Delta.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -469,7 +469,7 @@
     {
       "id": "frequency-readback-safety-3",
       "stepId": "frequency-readback",
-      "transcript": "9V-BCD, standby.",
+      "transcript": "9 Victor Bravo Charlie Delta, standby.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -487,7 +487,7 @@
     {
       "id": "frequency-readback-safety-5",
       "stepId": "frequency-readback",
-      "transcript": "One two one decimal six, 9V-BCA.",
+      "transcript": "One two one decimal six, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -505,7 +505,7 @@
     {
       "id": "frequency-readback-safety-7",
       "stepId": "frequency-readback",
-      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "transcript": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -523,7 +523,7 @@
     {
       "id": "frequency-readback-safety-9",
       "stepId": "frequency-readback",
-      "transcript": "Unable, 9V-BCA.",
+      "transcript": "Unable, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -531,7 +531,7 @@
     {
       "id": "frequency-readback-safety-10",
       "stepId": "frequency-readback",
-      "transcript": "Standby, 9V-BCA.",
+      "transcript": "Standby, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -539,7 +539,7 @@
     {
       "id": "contact-tower-correct-1",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -548,7 +548,7 @@
     {
       "id": "contact-tower-correct-2",
       "stepId": "contact-tower",
-      "transcript": "SELETAR TOWER, 9V-BCA, HOLDING SHORT AT WHISKEY ONE, RUNWAY TWO ONE, READY FOR DEPARTURE.",
+      "transcript": "SELETAR TOWER, 9 VICTOR BRAVO CHARLIE ALPHA, HOLDING SHORT AT WHISKEY ONE, RUNWAY TWO ONE, READY FOR DEPARTURE.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -575,7 +575,7 @@
     {
       "id": "contact-tower-correct-5",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower 9V-BCA holding short at Whiskey One runway two one ready for departure",
+      "transcript": "Seletar Tower 9 Victor Bravo Charlie Alpha holding short at Whiskey One runway two one ready for departure",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -584,7 +584,7 @@
     {
       "id": "contact-tower-correct-6",
       "stepId": "contact-tower",
-      "transcript": "Roger, Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "transcript": "Roger, Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -593,7 +593,7 @@
     {
       "id": "contact-tower-correct-7",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure. Wilco.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -602,7 +602,7 @@
     {
       "id": "contact-tower-correct-8",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway 21, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway 21, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -611,7 +611,7 @@
     {
       "id": "contact-tower-correct-9",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at W1, runway two one, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at W1, runway two one, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -620,7 +620,7 @@
     {
       "id": "contact-tower-correct-10",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -629,7 +629,7 @@
     {
       "id": "contact-tower-safety-1",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCD, holding short at Whiskey One, runway two one, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Delta, holding short at Whiskey One, runway two one, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -647,7 +647,7 @@
     {
       "id": "contact-tower-safety-3",
       "stepId": "contact-tower",
-      "transcript": "9V-BCD, standby.",
+      "transcript": "9 Victor Bravo Charlie Delta, standby.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -665,7 +665,7 @@
     {
       "id": "contact-tower-safety-5",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway zero three, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway zero three, ready for departure.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -683,7 +683,7 @@
     {
       "id": "contact-tower-safety-7",
       "stepId": "contact-tower",
-      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "transcript": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -701,7 +701,7 @@
     {
       "id": "contact-tower-safety-9",
       "stepId": "contact-tower",
-      "transcript": "Unable, 9V-BCA.",
+      "transcript": "Unable, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -709,7 +709,7 @@
     {
       "id": "contact-tower-safety-10",
       "stepId": "contact-tower",
-      "transcript": "Standby, 9V-BCA.",
+      "transcript": "Standby, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -717,7 +717,7 @@
     {
       "id": "line-up-readback-correct-1",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "transcript": "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -726,7 +726,7 @@
     {
       "id": "line-up-readback-correct-2",
       "stepId": "line-up-readback",
-      "transcript": "LINE UP AND WAIT RUNWAY TWO ONE, 9V-BCA.",
+      "transcript": "LINE UP AND WAIT RUNWAY TWO ONE, 9 VICTOR BRAVO CHARLIE ALPHA.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -753,7 +753,7 @@
     {
       "id": "line-up-readback-correct-5",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one 9V-BCA",
+      "transcript": "Line up and wait runway two one 9 Victor Bravo Charlie Alpha",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -762,7 +762,7 @@
     {
       "id": "line-up-readback-correct-6",
       "stepId": "line-up-readback",
-      "transcript": "Roger, Line up and wait runway two one, 9V-BCA.",
+      "transcript": "Roger, Line up and wait runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -771,7 +771,7 @@
     {
       "id": "line-up-readback-correct-7",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one, 9V-BCA. Wilco.",
+      "transcript": "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -780,7 +780,7 @@
     {
       "id": "line-up-readback-correct-8",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway 21, 9V-BCA.",
+      "transcript": "Line up and wait runway 21, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -789,7 +789,7 @@
     {
       "id": "line-up-readback-correct-9",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "transcript": "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -798,7 +798,7 @@
     {
       "id": "line-up-readback-correct-10",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "transcript": "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -807,7 +807,7 @@
     {
       "id": "line-up-readback-safety-1",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one, 9V-BCD.",
+      "transcript": "Line up and wait runway two one, 9 Victor Bravo Charlie Delta.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -825,7 +825,7 @@
     {
       "id": "line-up-readback-safety-3",
       "stepId": "line-up-readback",
-      "transcript": "9V-BCD, standby.",
+      "transcript": "9 Victor Bravo Charlie Delta, standby.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -843,7 +843,7 @@
     {
       "id": "line-up-readback-safety-5",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway zero three, 9V-BCA.",
+      "transcript": "Line up and wait runway zero three, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -861,7 +861,7 @@
     {
       "id": "line-up-readback-safety-7",
       "stepId": "line-up-readback",
-      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "transcript": "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -879,7 +879,7 @@
     {
       "id": "line-up-readback-safety-9",
       "stepId": "line-up-readback",
-      "transcript": "Unable, 9V-BCA.",
+      "transcript": "Unable, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -887,7 +887,7 @@
     {
       "id": "line-up-readback-safety-10",
       "stepId": "line-up-readback",
-      "transcript": "Standby, 9V-BCA.",
+      "transcript": "Standby, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -895,7 +895,7 @@
     {
       "id": "takeoff-readback-correct-1",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "transcript": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -904,7 +904,7 @@
     {
       "id": "takeoff-readback-correct-2",
       "stepId": "takeoff-readback",
-      "transcript": "CLEARED FOR TAKEOFF RUNWAY TWO ONE, 9V-BCA.",
+      "transcript": "CLEARED FOR TAKEOFF RUNWAY TWO ONE, 9 VICTOR BRAVO CHARLIE ALPHA.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -931,7 +931,7 @@
     {
       "id": "takeoff-readback-correct-5",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one 9V-BCA",
+      "transcript": "Cleared for takeoff runway two one 9 Victor Bravo Charlie Alpha",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -940,7 +940,7 @@
     {
       "id": "takeoff-readback-correct-6",
       "stepId": "takeoff-readback",
-      "transcript": "Roger, Cleared for takeoff runway two one, 9V-BCA.",
+      "transcript": "Roger, Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -949,7 +949,7 @@
     {
       "id": "takeoff-readback-correct-7",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one, 9V-BCA. Wilco.",
+      "transcript": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -958,7 +958,7 @@
     {
       "id": "takeoff-readback-correct-8",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway 21, 9V-BCA.",
+      "transcript": "Cleared for takeoff runway 21, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -967,7 +967,7 @@
     {
       "id": "takeoff-readback-correct-9",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "transcript": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -976,7 +976,7 @@
     {
       "id": "takeoff-readback-correct-10",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "transcript": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -985,7 +985,7 @@
     {
       "id": "takeoff-readback-safety-1",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one, 9V-BCD.",
+      "transcript": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Delta.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -1003,7 +1003,7 @@
     {
       "id": "takeoff-readback-safety-3",
       "stepId": "takeoff-readback",
-      "transcript": "9V-BCD, standby.",
+      "transcript": "9 Victor Bravo Charlie Delta, standby.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -1021,7 +1021,7 @@
     {
       "id": "takeoff-readback-safety-5",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway zero three, 9V-BCA.",
+      "transcript": "Cleared for takeoff runway zero three, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -1039,7 +1039,7 @@
     {
       "id": "takeoff-readback-safety-7",
       "stepId": "takeoff-readback",
-      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "transcript": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -1057,7 +1057,7 @@
     {
       "id": "takeoff-readback-safety-9",
       "stepId": "takeoff-readback",
-      "transcript": "Unable, 9V-BCA.",
+      "transcript": "Unable, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
@@ -1065,7 +1065,7 @@
     {
       "id": "takeoff-readback-safety-10",
       "stepId": "takeoff-readback",
-      "transcript": "Standby, 9V-BCA.",
+      "transcript": "Standby, 9 Victor Bravo Charlie Alpha.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"

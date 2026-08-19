@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
 const phrases = [
-  "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
-  "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
-  "One one eight decimal four five, 9V-BCA.",
-  "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
-  "Line up and wait runway two one, 9V-BCA.",
-  "Cleared for takeoff runway two one, 9V-BCA.",
+  "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+  "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.",
+  "One one eight decimal four five, 9 Victor Bravo Charlie Alpha.",
+  "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure.",
+  "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha.",
+  "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha.",
 ];
 
 test("completes the full parking-to-airborne training journey", async ({ page }) => {

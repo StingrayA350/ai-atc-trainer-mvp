@@ -140,7 +140,7 @@ export async function processTransmission(input: {
   const validation = validateTransmission(step.instruction, parsed, step.successTransition);
   const controllerText = validation.status === "ACCEPTED"
     ? step.successControllerText
-    : correctionFor(validation, scenario.aircraft.callsign);
+    : correctionFor(validation, scenario.aircraft.spokenCallsign);
   const next: SessionRecord = { ...session, lastControllerText: controllerText };
 
   if (validation.status === "ACCEPTED") {

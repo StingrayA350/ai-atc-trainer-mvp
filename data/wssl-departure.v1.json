@@ -2,7 +2,11 @@
   "id": "wssl-c172-stand-c6-rwy21",
   "version": "1.1.0-draft",
   "airportDataVersion": "WSSL-ADC-2025-08-07",
-  "aircraft": { "type": "C172", "callsign": "9V-BCA" },
+  "aircraft": {
+    "type": "C172",
+    "callsign": "9V-BCA",
+    "spokenCallsign": "9 Victor Bravo Charlie Alpha"
+  },
   "startPositionId": "STAND_C6",
   "routeIds": ["C6_WP_W1", "W1_RWY21_LINEUP", "RWY21_TAKEOFF"],
   "initialState": "PARKED",
@@ -29,7 +33,7 @@
       "kind": "TAXI",
       "movementState": "TAXIING",
       "completionState": "HOLDING_POINT",
-      "completionControllerText": "9V-BCA, contact Seletar Tower on one one eight decimal four five.",
+      "completionControllerText": "9 Victor Bravo Charlie Alpha, contact Seletar Tower on one one eight decimal four five.",
       "points": [[37.3, 39.3], [39.7, 38.7], [41.4, 37.9], [42.8, 35.2], [44.2, 32.8], [45.6, 30.4], [47.2, 29.5], [49.1, 30.0], [50.4, 31.0]],
       "durationMs": 6000
     },
@@ -39,7 +43,7 @@
       "kind": "LINE_UP",
       "movementState": "TAKEOFF_READBACK_PENDING",
       "completionState": "TAKEOFF_READBACK_PENDING",
-      "completionControllerText": "9V-BCA, runway two one, cleared for takeoff.",
+      "completionControllerText": "9 Victor Bravo Charlie Alpha, runway two one, cleared for takeoff.",
       "points": [[50.4, 31.0], [51.7, 30.5], [53.3, 30.8], [52.0, 33.0]],
       "durationMs": 3000
     },
@@ -49,7 +53,7 @@
       "kind": "TAKEOFF",
       "movementState": "TAKEOFF_ROLL",
       "completionState": "COMPLETE",
-      "completionControllerText": "9V-BCA, airborne. Exercise complete.",
+      "completionControllerText": "9 Victor Bravo Charlie Alpha, airborne. Exercise complete.",
       "points": [[52.0, 33.0], [49.8, 35.8], [47.2, 39.4], [44.5, 43.3]],
       "durationMs": 5500
     }
@@ -66,10 +70,10 @@
         "runway": "21",
         "action": "REQUEST_TAXI",
         "requiredFields": ["CALLSIGN", "RUNWAY", "ACTION"],
-        "approvedSpokenText": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one."
+        "approvedSpokenText": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one."
       },
       "successTransition": "TAXI_READBACK_PENDING",
-      "successControllerText": "9V-BCA, taxi to holding point Whiskey One, runway two one, via Whiskey Papa. Hold short of runway two one.",
+      "successControllerText": "9 Victor Bravo Charlie Alpha, taxi to holding point Whiskey One, runway two one, via Whiskey Papa. Hold short of runway two one.",
       "hint": "Call Seletar Ground with your callsign, stand, aircraft type, assigned runway, and taxi request."
     },
     {
@@ -85,11 +89,11 @@
         "holdingPoint": "W1",
         "action": "HOLD_SHORT",
         "requiredFields": ["CALLSIGN", "TAXIWAYS", "RUNWAY", "HOLDING_POINT", "ACTION"],
-        "approvedSpokenText": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA."
+        "approvedSpokenText": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha."
       },
       "successTransition": "TAXIING",
       "routeToReveal": "C6_WP_W1",
-      "successControllerText": "9V-BCA, readback correct. Taxi via Whiskey Papa to Whiskey One.",
+      "successControllerText": "9 Victor Bravo Charlie Alpha, readback correct. Taxi via Whiskey Papa to Whiskey One.",
       "hint": "Read back taxiway WP, holding point W1, runway 21, and the hold-short instruction."
     },
     {
@@ -103,10 +107,10 @@
         "frequency": "118.450",
         "action": "CONTACT_TOWER",
         "requiredFields": ["CALLSIGN", "FREQUENCY"],
-        "approvedSpokenText": "One one eight decimal four five, 9V-BCA."
+        "approvedSpokenText": "One one eight decimal four five, 9 Victor Bravo Charlie Alpha."
       },
       "successTransition": "TOWER_CONTACT",
-      "successControllerText": "9V-BCA, contact Seletar Tower.",
+      "successControllerText": "9 Victor Bravo Charlie Alpha, contact Seletar Tower.",
       "successController": "TOWER",
       "successFrequency": "118.450",
       "hint": "Read back the Tower frequency: 118.45."
@@ -123,10 +127,10 @@
         "holdingPoint": "W1",
         "action": "READY_DEPARTURE",
         "requiredFields": ["CALLSIGN", "RUNWAY", "HOLDING_POINT", "ACTION"],
-        "approvedSpokenText": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure."
+        "approvedSpokenText": "Seletar Tower, 9 Victor Bravo Charlie Alpha, holding short at Whiskey One, runway two one, ready for departure."
       },
       "successTransition": "RUNWAY_HOLD_OR_LINE_UP",
-      "successControllerText": "9V-BCA, runway two one, line up and wait.",
+      "successControllerText": "9 Victor Bravo Charlie Alpha, runway two one, line up and wait.",
       "hint": "Tell Tower your callsign, W1 holding position, runway 21, and that you are ready for departure."
     },
     {
@@ -140,11 +144,11 @@
         "runway": "21",
         "action": "LINE_UP_WAIT",
         "requiredFields": ["CALLSIGN", "RUNWAY", "ACTION"],
-        "approvedSpokenText": "Line up and wait runway two one, 9V-BCA."
+        "approvedSpokenText": "Line up and wait runway two one, 9 Victor Bravo Charlie Alpha."
       },
       "successTransition": "TAKEOFF_READBACK_PENDING",
       "routeToReveal": "W1_RWY21_LINEUP",
-      "successControllerText": "9V-BCA, readback correct. Line up and wait runway two one.",
+      "successControllerText": "9 Victor Bravo Charlie Alpha, readback correct. Line up and wait runway two one.",
       "hint": "Read back runway 21 and the full line-up-and-wait instruction."
     },
     {
@@ -158,11 +162,11 @@
         "runway": "21",
         "action": "CLEARED_TAKEOFF",
         "requiredFields": ["CALLSIGN", "RUNWAY", "ACTION"],
-        "approvedSpokenText": "Cleared for takeoff runway two one, 9V-BCA."
+        "approvedSpokenText": "Cleared for takeoff runway two one, 9 Victor Bravo Charlie Alpha."
       },
       "successTransition": "TAKEOFF_ROLL",
       "routeToReveal": "RWY21_TAKEOFF",
-      "successControllerText": "9V-BCA, readback correct. Cleared for takeoff runway two one.",
+      "successControllerText": "9 Victor Bravo Charlie Alpha, readback correct. Cleared for takeoff runway two one.",
       "hint": "Read back your callsign, runway 21, and the takeoff clearance."
     }
   ]

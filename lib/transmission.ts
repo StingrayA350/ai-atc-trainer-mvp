@@ -162,7 +162,7 @@ const fieldLabels: Record<ClearanceField, string> = {
 function speakValue(value: string | string[]) {
   if (Array.isArray(value)) return value.join(", then ");
   const replacements: Record<string, string> = {
-    "9V-BCA": "9V-BCA",
+    "9V-BCA": "9 Victor Bravo Charlie Alpha",
     "21": "two one",
     "W1": "Whiskey One",
     "WP": "Whiskey Papa",
@@ -177,7 +177,7 @@ function speakValue(value: string | string[]) {
   return replacements[value] ?? value;
 }
 
-export function correctionFor(result: ValidationResult, callsign = "9V-BCA") {
+export function correctionFor(result: ValidationResult, callsign = "9 Victor Bravo Charlie Alpha") {
   if (result.status === "CLARIFICATION_REQUIRED") {
     return `${callsign}, transmission unclear. Say again.`;
   }

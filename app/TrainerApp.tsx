@@ -21,7 +21,7 @@ type TrainerSession = {
   progress: { current: number; total: number };
   copy: { title: string; detail: string; tag: string };
   scenario: {
-    aircraft: { type: string; callsign: string };
+    aircraft: { type: string; callsign: string; spokenCallsign: string };
     airport: { icao: string; name: string; groundFrequency: string; towerFrequency: string; runway: string };
     startPositionId: string;
     startPosition: Point;
@@ -449,7 +449,7 @@ export function TrainerApp() {
         </div>
         <div className="flight-summary" aria-label="Exercise details">
           <span><small>Aircraft</small> {aircraftName(session.scenario.aircraft.type)}</span>
-          <span><small>Callsign</small> {session.scenario.aircraft.callsign}</span>
+          <span><small>Callsign</small> {session.scenario.aircraft.spokenCallsign}</span>
           <span className={`status-pill ${validationPending ? "pending" : ""}`}><i /> {validationPending ? "Validation draft" : "Training mode"}</span>
           <button className="topbar-link" onClick={() => setShowAbout(true)}>About</button>
         </div>
@@ -496,7 +496,7 @@ export function TrainerApp() {
                 ))}
               </svg>
               <span className={`aircraft-marker ${moving ? "in-motion" : ""}`} style={{ left: `${displayedAircraftPosition[0]}%`, top: `${displayedAircraftPosition[1]}%` }} aria-label="Aircraft position">
-                <i>✦</i><b>{session.scenario.aircraft.callsign}</b>
+                <i>✦</i><b>{session.scenario.aircraft.spokenCallsign}</b>
               </span>
             </div>
             <div className="map-message"><span>Position</span><strong>{moving ? "Moving on accepted route" : positionLabel(session)}</strong></div>
@@ -587,7 +587,7 @@ function AboutDialog({ session, onClose, onRestart }: { session: TrainerSession;
         <p className="eyebrow">ABOUT THIS EXERCISE</p>
         <h2 id="about-title">A guided radio training prototype.</h2>
         <p>Practice one chart-derived {aircraftName(session.scenario.aircraft.type)} departure from Seletar using Ground and Tower calls, deterministic readback checks, and a route traced on the official aerodrome chart.</p>
-        <dl><div><dt>Scenario</dt><dd>{session.scenario.airport.icao} · {session.scenario.aircraft.callsign} · Runway {session.scenario.airport.runway}</dd></div><div><dt>Start</dt><dd>{formatPositionId(session.scenario.startPositionId)} · via {session.scenario.taxiways.join(", ")} to {session.scenario.holdingPoint}</dd></div><div><dt>Data status</dt><dd>{session.scenario.validationStatus.replaceAll("_", " ")}</dd></div><div><dt>Chart</dt><dd>CAAS AD-2-WSSL-ADC-1-1 / 1-2</dd></div></dl>
+        <dl><div><dt>Scenario</dt><dd>{session.scenario.airport.icao} · {session.scenario.aircraft.spokenCallsign} · Runway {session.scenario.airport.runway}</dd></div><div><dt>Start</dt><dd>{formatPositionId(session.scenario.startPositionId)} · via {session.scenario.taxiways.join(", ")} to {session.scenario.holdingPoint}</dd></div><div><dt>Data status</dt><dd>{session.scenario.validationStatus.replaceAll("_", " ")}</dd></div><div><dt>Chart</dt><dd>CAAS AD-2-WSSL-ADC-1-1 / 1-2</dd></div></dl>
         <div className="safety-callout"><strong>Training use only</strong><p>This application is not operational flight-planning, navigation, or an approved aviation training device. The draft route and phraseology require aviation SME sign-off before learner release.</p></div>
         <div className="dialog-actions"><button onClick={onRestart}>Restart exercise</button><button className="primary" onClick={onClose}>Return to training</button></div>
       </section>
@@ -599,7 +599,7 @@ function DebriefView({ session, debrief, onRestart }: { session: TrainerSession;
   return (
     <main className="debrief-page">
       <header className="debrief-topbar"><div className="brand-lockup"><span className="brand-mark">A</span><div><p className="eyebrow">AI ATC TRAINER</p><h1>Exercise debrief</h1></div></div><span className="complete-pill">✓ Airborne</span></header>
-      <section className="debrief-hero"><p className="eyebrow">SELETAR DEPARTURE · {session.scenario.aircraft.callsign}</p><h2>Nicely flown. You made it from the stand to the sky.</h2><p>Your next practice focus is <strong>{debrief.nextPracticeFocus.toLowerCase()}</strong>.</p></section>
+      <section className="debrief-hero"><p className="eyebrow">SELETAR DEPARTURE · {session.scenario.aircraft.spokenCallsign}</p><h2>Nicely flown. You made it from the stand to the sky.</h2><p>Your next practice focus is <strong>{debrief.nextPracticeFocus.toLowerCase()}</strong>.</p></section>
       <section className="metric-grid" aria-label="Session metrics">
         <article><strong>{debrief.metrics.accuracyPercent}%</strong><span>First-pass accuracy</span></article>
         <article><strong>{debrief.metrics.acceptedTransmissions}</strong><span>Accepted calls</span></article>
