@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import evaluationData from "@/data/evaluation-cases.v1.json";
 import { buildDebrief } from "@/lib/debrief";
+import { speakFrequency, speakIdentifier, speakPosition } from "@/lib/phraseology";
 import { publicScenarioData, scenario } from "@/lib/scenario";
 import { parseTransmission, validateTransmission } from "@/lib/transmission";
 
@@ -20,15 +21,24 @@ describe("WSSL scenario package", () => {
     expect(JSON.stringify(scenario)).not.toMatch(/STAND_C7|Echo Six|EC5|runway zero three/i);
   });
 
-  it("uses the phonetic callsign in every learner-facing ATC exchange", () => {
+  it("uses phonetic aviation wording in every learner-facing ATC exchange", () => {
     const spokenText = [
       scenario.aircraft.spokenCallsign,
-      ...Object.values(scenario.routes).map((route) => route.completionControllerText),
-      ...scenario.steps.flatMap((step) => [step.instruction.approvedSpokenText, step.successControllerText]),
+      ...Object.values(scenario.routes).flatMap((route) => [route.label, route.completionControllerText]),
+      ...scenario.steps.flatMap((step) => [step.instruction.approvedSpokenText, step.successControllerText, step.hint]),
     ];
 
     expect(scenario.aircraft.spokenCallsign).toBe("9 Victor Bravo Charlie Alpha");
     expect(spokenText.every((text) => !text.includes("9V-BCA"))).toBe(true);
+    expect(spokenText.join(" ")).not.toMatch(/\b(?:WP|W1|C6)\b|runway 21|118\.45/i);
+  });
+
+  it("formats chart identifiers as spoken aviation phraseology", () => {
+    expect(speakIdentifier("WP")).toBe("Whiskey Papa");
+    expect(speakIdentifier("W1")).toBe("Whiskey One");
+    expect(speakIdentifier("21")).toBe("Two One");
+    expect(speakPosition("STAND_C6")).toBe("Stand Charlie Six");
+    expect(speakFrequency("118.450")).toBe("One One Eight Decimal Four Five");
   });
 
   it("contains at least 120 labeled evaluation cases awaiting SME review", () => {
@@ -38,6 +48,16 @@ describe("WSSL scenario package", () => {
 });
 
 describe("deterministic readback validation", () => {
+  it("accepts Whiskey or Whisky Papa rather than requiring the letters W P", () => {
+    const step = scenario.steps.find((candidate) => candidate.id === "taxi-readback")!;
+    const transcript = "Taxi via Whisky Papa to holding point Whisky One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.";
+    const parsed = parseTransmission(transcript);
+
+    expect(parsed.taxiways).toEqual(["WP"]);
+    expect(parsed.holdingPoint).toBe("W1");
+    expect(validateTransmission(step.instruction, parsed, step.successTransition).status).toBe("ACCEPTED");
+  });
+
   for (const fixture of evaluationData.cases) {
     it(`${fixture.id} → ${fixture.expectedStatus}`, () => {
       const step = scenario.steps.find((candidate) => candidate.id === fixture.stepId);

@@ -11,7 +11,7 @@ const phonetics: Record<string, string> = {
   foxtrot: "f", golf: "g", hotel: "h", india: "i", juliett: "j",
   kilo: "k", lima: "l", mike: "m", november: "n", oscar: "o",
   papa: "p", quebec: "q", romeo: "r", sierra: "s", tango: "t",
-  uniform: "u", victor: "v", whiskey: "w", xray: "x", yankee: "y", zulu: "z",
+  uniform: "u", victor: "v", whiskey: "w", whisky: "w", xray: "x", yankee: "y", zulu: "z",
 };
 
 const spokenDigits: Record<string, string> = {

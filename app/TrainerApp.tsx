@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { speakIdentifier, speakPosition } from "@/lib/phraseology";
 
 type Point = [number, number];
 type Route = { id: string; label: string; kind: "TAXI" | "LINE_UP" | "TAKEOFF"; points: Point[]; durationMs: number };
@@ -411,9 +412,9 @@ export function TrainerApp() {
 
   const journey = useMemo(() => session ? [
     [`At ${formatPositionId(session.scenario.startPositionId)}`, "Contact Ground"],
-    ["Taxi clearance", `Read back ${session.scenario.taxiways.join(" / ")}`],
-    [`Holding ${session.scenario.holdingPoint}`, "Contact Tower"],
-    [`Runway ${session.scenario.airport.runway}`, "Line up"],
+    ["Taxi clearance", `Read back ${session.scenario.taxiways.map(speakIdentifier).join(" / ")}`],
+    [`Holding ${speakIdentifier(session.scenario.holdingPoint)}`, "Contact Tower"],
+    [`Runway ${speakIdentifier(session.scenario.airport.runway)}`, "Line up"],
     ["Takeoff", "Read back clearance"],
     ["Airborne", "Review debrief"],
   ] : [], [session]);
@@ -561,8 +562,8 @@ export function TrainerApp() {
 function positionLabel(session: TrainerSession) {
   const { state } = session;
   const start = formatPositionId(session.scenario.startPositionId);
-  const holdingPoint = session.scenario.holdingPoint;
-  const runway = session.scenario.airport.runway;
+  const holdingPoint = speakIdentifier(session.scenario.holdingPoint);
+  const runway = speakIdentifier(session.scenario.airport.runway);
   if (["PARKED", "READY_FOR_GROUND", "TAXI_READBACK_PENDING"].includes(state)) return `Parked · ${start}`;
   if (["TAXIING"].includes(state)) return `Taxiing to ${holdingPoint}`;
   if (["HOLDING_POINT", "TOWER_TRANSITION", "TOWER_CONTACT", "RUNWAY_HOLD_OR_LINE_UP"].includes(state)) return `Holding point ${holdingPoint}`;
@@ -572,7 +573,7 @@ function positionLabel(session: TrainerSession) {
 }
 
 function formatPositionId(positionId: string) {
-  return positionId.replaceAll("_", " ").toLowerCase().replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return speakPosition(positionId);
 }
 
 function aircraftName(type: string) {
@@ -587,7 +588,7 @@ function AboutDialog({ session, onClose, onRestart }: { session: TrainerSession;
         <p className="eyebrow">ABOUT THIS EXERCISE</p>
         <h2 id="about-title">A guided radio training prototype.</h2>
         <p>Practice one chart-derived {aircraftName(session.scenario.aircraft.type)} departure from Seletar using Ground and Tower calls, deterministic readback checks, and a route traced on the official aerodrome chart.</p>
-        <dl><div><dt>Scenario</dt><dd>{session.scenario.airport.icao} · {session.scenario.aircraft.spokenCallsign} · Runway {session.scenario.airport.runway}</dd></div><div><dt>Start</dt><dd>{formatPositionId(session.scenario.startPositionId)} · via {session.scenario.taxiways.join(", ")} to {session.scenario.holdingPoint}</dd></div><div><dt>Data status</dt><dd>{session.scenario.validationStatus.replaceAll("_", " ")}</dd></div><div><dt>Chart</dt><dd>CAAS AD-2-WSSL-ADC-1-1 / 1-2</dd></div></dl>
+        <dl><div><dt>Scenario</dt><dd>{session.scenario.airport.icao} · {session.scenario.aircraft.spokenCallsign} · Runway {speakIdentifier(session.scenario.airport.runway)}</dd></div><div><dt>Start</dt><dd>{formatPositionId(session.scenario.startPositionId)} · via {session.scenario.taxiways.map(speakIdentifier).join(", ")} to {speakIdentifier(session.scenario.holdingPoint)}</dd></div><div><dt>Data status</dt><dd>{session.scenario.validationStatus.replaceAll("_", " ")}</dd></div><div><dt>Chart</dt><dd>CAAS AD-2-WSSL-ADC-1-1 / 1-2</dd></div></dl>
         <div className="safety-callout"><strong>Training use only</strong><p>This application is not operational flight-planning, navigation, or an approved aviation training device. The draft route and phraseology require aviation SME sign-off before learner release.</p></div>
         <div className="dialog-actions"><button onClick={onRestart}>Restart exercise</button><button className="primary" onClick={onClose}>Return to training</button></div>
       </section>

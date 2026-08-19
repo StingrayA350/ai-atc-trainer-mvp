@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 
 const spokenCallsign = "9 Victor Bravo Charlie Alpha";
 const steps = [
-  ["contact-ground", `Seletar Ground, ${spokenCallsign}, Cessna 172 at stand Charlie Six, request taxi runway two one.`],
+  ["contact-ground", `Seletar Ground, ${spokenCallsign}, Cessna one seven two at stand Charlie Six, request taxi runway two one.`],
   ["taxi-readback", `Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, ${spokenCallsign}.`],
   ["frequency-readback", `One one eight decimal four five, ${spokenCallsign}.`],
   ["contact-tower", `Seletar Tower, ${spokenCallsign}, holding short at Whiskey One, runway two one, ready for departure.`],

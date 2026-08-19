@@ -10,6 +10,7 @@ import {
 } from "@/db";
 import { buildDebrief } from "./debrief";
 import { interpretTranscript, providerStatus, synthesizeControllerSpeech, transcribeAudio } from "./providers";
+import { speakIdentifier } from "./phraseology";
 import { getStepForState, nextStepIndex, publicScenarioData, scenario } from "./scenario";
 import type { ScenarioState } from "./schemas";
 import { correctionFor, parseTransmission, validateTransmission } from "./transmission";
@@ -17,18 +18,20 @@ import { correctionFor, parseTransmission, validateTransmission } from "./transm
 function stateCopy(state: ScenarioState): { title: string; detail: string; tag: string } {
   const holdingPoint = scenario.steps.find((step) => step.instruction.instructionType === "TAXI")?.instruction.holdingPoint ?? "the holding point";
   const runway = scenario.airport.runway;
+  const spokenHoldingPoint = holdingPoint === "the holding point" ? holdingPoint : speakIdentifier(holdingPoint);
+  const spokenRunway = speakIdentifier(runway).toLowerCase();
   const copy: Record<ScenarioState, { title: string; detail: string; tag: string }> = {
   PARKED: { title: "Aircraft parked", detail: "Preparing the exercise.", tag: "SYSTEM" },
   READY_FOR_GROUND: { title: "Contact Ground when you’re ready to taxi.", detail: "Report your callsign, stand, aircraft type, runway, and request.", tag: "YOUR TURN" },
   GROUND_INSTRUCTION: { title: "Listen for your taxi clearance.", detail: "Build the route in your head before reading it back.", tag: "LISTEN" },
   TAXI_READBACK_PENDING: { title: "Read back the taxi clearance.", detail: "Include the route, holding point, runway, and hold-short instruction.", tag: "YOUR TURN" },
-  TAXIING: { title: "Taxi route accepted.", detail: `Follow the charted route to holding point ${holdingPoint}.`, tag: "MOVING" },
-  HOLDING_POINT: { title: "Read back the Tower frequency.", detail: `Remain holding short of runway ${runway}, then change frequency.`, tag: "YOUR TURN" },
+  TAXIING: { title: "Taxi route accepted.", detail: `Follow the charted route to holding point ${spokenHoldingPoint}.`, tag: "MOVING" },
+  HOLDING_POINT: { title: "Read back the Tower frequency.", detail: `Remain holding short of runway ${spokenRunway}, then change frequency.`, tag: "YOUR TURN" },
   TOWER_TRANSITION: { title: "Read back the Tower frequency.", detail: "Then change to Seletar Tower.", tag: "YOUR TURN" },
   TOWER_CONTACT: { title: "Contact Tower when ready for departure.", detail: "Report your holding point and assigned runway.", tag: "YOUR TURN" },
   RUNWAY_HOLD_OR_LINE_UP: { title: "Read back line up and wait.", detail: "Runway entry requires an exact safety-critical readback.", tag: "YOUR TURN" },
   TAKEOFF_READBACK_PENDING: { title: "Read back the takeoff clearance.", detail: "Include your callsign and runway.", tag: "YOUR TURN" },
-  TAKEOFF_ROLL: { title: "Takeoff clearance accepted.", detail: `The aircraft is accelerating on runway ${runway}.`, tag: "TAKEOFF" },
+  TAKEOFF_ROLL: { title: "Takeoff clearance accepted.", detail: `The aircraft is accelerating on runway ${spokenRunway}.`, tag: "TAKEOFF" },
   AIRBORNE: { title: "Airborne.", detail: "The exercise is ending.", tag: "COMPLETE" },
   COMPLETE: { title: "Exercise complete.", detail: "Review the transcript and your coaching debrief.", tag: "DEBRIEF" },
   };

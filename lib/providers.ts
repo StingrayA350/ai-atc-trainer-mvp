@@ -69,7 +69,7 @@ export async function interpretTranscript(transcript: string, step: ScenarioStep
         input: [
           {
             role: "system",
-            content: "Extract only the stated aviation readback fields. Never infer a clearance element that was not spoken. Normalize ICAO phonetics, runway digits, taxiway identifiers, holding points, frequencies, and callsigns.",
+            content: "Extract only the stated aviation readback fields. Never infer a clearance element that was not spoken. Normalize ICAO phonetics, runway digits, taxiway identifiers, holding points, frequencies, and callsigns. Treat Whiskey Papa or Whisky Papa as taxiway WP, Whiskey One or Whisky One as holding point W1, and 9 Victor Bravo Charlie Alpha as callsign 9V-BCA.",
           },
           {
             role: "user",

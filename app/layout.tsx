@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 const title = "AI ATC Trainer — Seletar Departure";
-const description = "Practice a chart-derived Cessna 172 departure from stand C6 via WP and W1 to Runway 21 at Seletar Airport.";
+const description = "Practice a chart-derived Cessna 172 departure from Stand Charlie Six via Whiskey Papa and Whiskey One to Runway Two One at Seletar Airport.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();

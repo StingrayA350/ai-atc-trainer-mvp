@@ -5,7 +5,7 @@
     {
       "id": "contact-ground-correct-1",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -14,7 +14,7 @@
     {
       "id": "contact-ground-correct-2",
       "stepId": "contact-ground",
-      "transcript": "SELETAR GROUND, 9 VICTOR BRAVO CHARLIE ALPHA, CESSNA 172 AT STAND CHARLIE SIX, REQUEST TAXI RUNWAY TWO ONE.",
+      "transcript": "SELETAR GROUND, 9 VICTOR BRAVO CHARLIE ALPHA, CESSNA ONE SEVEN TWO AT STAND CHARLIE SIX, REQUEST TAXI RUNWAY TWO ONE.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -23,7 +23,7 @@
     {
       "id": "contact-ground-correct-3",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, nine victor bravo charlie alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, nine victor bravo charlie alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -32,7 +32,7 @@
     {
       "id": "contact-ground-correct-4",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, niner victor bravo charlie alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, niner victor bravo charlie alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -41,7 +41,7 @@
     {
       "id": "contact-ground-correct-5",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground 9 Victor Bravo Charlie Alpha Cessna 172 at stand Charlie Six request taxi runway two one",
+      "transcript": "Seletar Ground 9 Victor Bravo Charlie Alpha Cessna one seven two at stand Charlie Six request taxi runway two one",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -50,7 +50,7 @@
     {
       "id": "contact-ground-correct-6",
       "stepId": "contact-ground",
-      "transcript": "Roger, Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Roger, Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -59,7 +59,7 @@
     {
       "id": "contact-ground-correct-7",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one. Wilco.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one. Wilco.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -68,7 +68,7 @@
     {
       "id": "contact-ground-correct-8",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway 21.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway 21.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -77,7 +77,7 @@
     {
       "id": "contact-ground-correct-9",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -86,7 +86,7 @@
     {
       "id": "contact-ground-correct-10",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "ACCEPTED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -95,7 +95,7 @@
     {
       "id": "contact-ground-safety-1",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Delta, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Delta, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -104,7 +104,7 @@
     {
       "id": "contact-ground-safety-2",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground., Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground., Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -131,7 +131,7 @@
     {
       "id": "contact-ground-safety-5",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway zero three.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway zero three.",
       "confidence": 0.96,
       "expectedStatus": "CORRECTION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
@@ -149,7 +149,7 @@
     {
       "id": "contact-ground-safety-7",
       "stepId": "contact-ground",
-      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "transcript": "Seletar Ground, 9 Victor Bravo Charlie Alpha, Cessna one seven two at stand Charlie Six, request taxi runway two one.",
       "confidence": 0.41,
       "expectedStatus": "CLARIFICATION_REQUIRED",
       "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
