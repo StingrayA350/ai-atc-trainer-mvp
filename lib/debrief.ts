@@ -58,13 +58,13 @@ export function buildDebrief(events: SessionEvent[], state: ScenarioState) {
   ];
   const improvements = metrics.corrections
     ? [
-        `Needed ${metrics.corrections} field-level correction${metrics.corrections === 1 ? "" : "s"}; pause briefly before transmitting to assemble the full readback.`,
+        `Worked through ${metrics.corrections} practice retr${metrics.corrections === 1 ? "y" : "ies"}; pausing briefly before transmitting can make the full readback easier.`,
         metrics.sayAgainUses || metrics.transcriptReveals
           ? "Use assistance deliberately, then repeat the instruction once from memory."
-          : "Keep the same calm pace when the instruction contains several elements.",
+          : "Keep a calm, steady pace when the instruction contains several elements.",
       ]
     : [
-        "No incorrect readbacks were recorded; next time, aim for the same completeness with less preparation time.",
+        "Every readback was complete; next time, build on that confidence at a comfortable pace.",
         "Continue using standard phrase order so the safety-critical fields are easy to hear.",
       ];
 

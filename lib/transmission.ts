@@ -151,8 +151,8 @@ export function validateTransmission(
 }
 
 const fieldLabels: Record<ClearanceField, string> = {
-  CALLSIGN: "callsign",
-  TAXIWAYS: "taxi route",
+  CALLSIGN: "call sign",
+  TAXIWAYS: "taxiway",
   RUNWAY: "runway",
   HOLDING_POINT: "holding point",
   FREQUENCY: "frequency",
@@ -160,7 +160,7 @@ const fieldLabels: Record<ClearanceField, string> = {
 };
 
 function speakValue(value: string | string[]) {
-  if (Array.isArray(value)) return value.join(", then ");
+  if (Array.isArray(value)) return value.map((item) => speakValue(item)).join(", then ");
   const replacements: Record<string, string> = {
     "9V-BCA": "9 Victor Bravo Charlie Alpha",
     "21": "two one",
@@ -179,10 +179,10 @@ function speakValue(value: string | string[]) {
 
 export function correctionFor(result: ValidationResult, callsign = "9 Victor Bravo Charlie Alpha") {
   if (result.status === "CLARIFICATION_REQUIRED") {
-    return `${callsign}, transmission unclear. Say again.`;
+    return `${callsign}, I didn't catch that clearly. Please say again when you're ready.`;
   }
   const incorrect = result.fieldResults.filter((field) => !field.correct);
-  if (!incorrect.length) return `${callsign}, readback correct.`;
-  const details = incorrect.map((field) => `${fieldLabels[field.field]} is ${speakValue(field.expected)}`).join("; ");
-  return `${callsign}, negative. ${details}. Read back.`;
+  if (!incorrect.length) return `${callsign}, readback correct. Nice work.`;
+  const details = incorrect.map((field) => `${fieldLabels[field.field]} should be ${speakValue(field.expected)}`).join("; ");
+  return `${callsign}, you're close. Please check: ${details}. Try the readback again when you're ready.`;
 }

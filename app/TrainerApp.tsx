@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { isSilentRecording } from "@/lib/audio";
 import { speakIdentifier, speakPosition } from "@/lib/phraseology";
 
 type Point = [number, number];
@@ -66,6 +67,14 @@ type BrowserSpeechRecognition = {
   stop(): void;
 };
 
+type AudioMonitor = {
+  context: AudioContext;
+  frame: number;
+  activeFrames: number;
+};
+
+const DRAG_TO_CANCEL_DISTANCE = 70;
+
 function requestId() {
   return crypto.randomUUID();
 }
@@ -118,6 +127,8 @@ export function TrainerApp() {
   const [hint, setHint] = useState<{ text: string; phrase: string } | null>(null);
   const [nudgeStateVersion, setNudgeStateVersion] = useState<number | null>(null);
   const [audioState, setAudioState] = useState<"READY" | "RECORDING" | "PROCESSING" | "PLAYING">("READY");
+  const [dragToCancel, setDragToCancel] = useState(false);
+  const [pttMessage, setPttMessage] = useState<string | null>(null);
   const [moving, setMoving] = useState(false);
   const [aircraftPosition, setAircraftPosition] = useState<Point>([50, 50]);
   const [zoom, setZoom] = useState(1.08);
@@ -131,6 +142,10 @@ export function TrainerApp() {
   const spokenRef = useRef("");
   const confidenceRef = useRef(0.99);
   const chunksRef = useRef<Blob[]>([]);
+  const audioMonitorRef = useRef<AudioMonitor | null>(null);
+  const recordingIntentRef = useRef(false);
+  const recordingCancelledRef = useRef(false);
+  const pttPointerRef = useRef<{ pointerId: number; x: number; y: number } | null>(null);
   const animatedVersions = useRef(new Set<string>());
   const dragRef = useRef<{ x: number; y: number; startX: number; startY: number } | null>(null);
   const stateActionInFlightRef = useRef(false);
@@ -300,10 +315,10 @@ export function TrainerApp() {
       setFeedback({
         status: validation.status,
         text: validation.status === "ACCEPTED"
-          ? "Readback accepted."
+          ? "Nice work — readback accepted."
           : validation.status === "CLARIFICATION_REQUIRED"
-            ? "Transmission unclear — this attempt was not scored."
-            : `Check your ${incorrect.join(", ")}.`,
+            ? "I didn’t catch that clearly. Take your time and try again when you’re ready."
+            : `Almost there — check your ${incorrect.join(", ")}, then try again when you’re ready.`,
         fields: incorrect,
       });
       setTextInput("");
@@ -331,15 +346,67 @@ export function TrainerApp() {
       confidenceRef.current = 0.99;
       chunksRef.current = [];
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!recordingIntentRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        setAudioState("READY");
+        if (recordingCancelledRef.current) setPttMessage("Recording cancelled — no transmission was sent.");
+        return;
+      }
       streamRef.current = stream;
       const recorder = new MediaRecorder(stream);
       recorderRef.current = recorder;
       recorder.ondataavailable = (event) => { if (event.data.size) chunksRef.current.push(event.data); };
       recorder.onstop = () => {
+        const monitor = audioMonitorRef.current;
+        const activeFrames = monitor?.activeFrames ?? 0;
+        if (monitor) {
+          cancelAnimationFrame(monitor.frame);
+          void monitor.context.close();
+          audioMonitorRef.current = null;
+        }
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || "audio/webm" });
         stream.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+        recorderRef.current = null;
+        const wasCancelled = recordingCancelledRef.current;
+        const wasSilent = isSilentRecording(spokenRef.current, activeFrames);
+        setDragToCancel(false);
+        if (wasCancelled || wasSilent) {
+          chunksRef.current = [];
+          setAudioState("READY");
+          setPttMessage(wasCancelled
+            ? "Recording cancelled — no transmission was sent."
+            : "No speech detected — recording cancelled.");
+          return;
+        }
         void submitTransmission(spokenRef.current, blob, confidenceRef.current);
       };
+
+      const audioWindow = window as unknown as {
+        AudioContext?: typeof AudioContext;
+        webkitAudioContext?: typeof AudioContext;
+      };
+      const AudioContextConstructor = audioWindow.AudioContext ?? audioWindow.webkitAudioContext;
+      if (AudioContextConstructor) {
+        const context = new AudioContextConstructor();
+        const analyser = context.createAnalyser();
+        analyser.fftSize = 512;
+        context.createMediaStreamSource(stream).connect(analyser);
+        const samples = new Uint8Array(analyser.fftSize);
+        const monitor: AudioMonitor = { context, frame: 0, activeFrames: 0 };
+        const sampleAudio = () => {
+          analyser.getByteTimeDomainData(samples);
+          let sumSquares = 0;
+          for (const sample of samples) {
+            const amplitude = (sample - 128) / 128;
+            sumSquares += amplitude * amplitude;
+          }
+          if (Math.sqrt(sumSquares / samples.length) > 0.02) monitor.activeFrames += 1;
+          monitor.frame = requestAnimationFrame(sampleAudio);
+        };
+        audioMonitorRef.current = monitor;
+        sampleAudio();
+      }
       const speechWindow = window as unknown as {
         SpeechRecognition?: new () => BrowserSpeechRecognition;
         webkitSpeechRecognition?: new () => BrowserSpeechRecognition;
@@ -366,34 +433,57 @@ export function TrainerApp() {
       recorder.start(100);
       setAudioState("RECORDING");
     } catch {
+      recordingIntentRef.current = false;
+      const monitor = audioMonitorRef.current;
+      if (monitor) {
+        cancelAnimationFrame(monitor.frame);
+        void monitor.context.close();
+        audioMonitorRef.current = null;
+      }
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+      recorderRef.current = null;
+      setAudioState("READY");
+      setDragToCancel(false);
       setFeedback({ status: "CLARIFICATION_REQUIRED", text: "Microphone access is required for push-to-talk. You can still use the text test console.", fields: [] });
     }
   }, [session?.currentStep, moving, audioState, submitTransmission]);
 
-  const stopRecording = useCallback(() => {
+  const stopRecording = useCallback((cancel = false) => {
+    recordingIntentRef.current = false;
+    recordingCancelledRef.current = recordingCancelledRef.current || cancel;
     if (recorderRef.current?.state === "recording") recorderRef.current.stop();
     try { recognitionRef.current?.stop(); } catch { /* already stopped */ }
     recognitionRef.current = null;
   }, []);
+
+  const beginRecording = useCallback(() => {
+    if (!session?.currentStep || moving || audioState !== "READY") return;
+    recordingIntentRef.current = true;
+    recordingCancelledRef.current = false;
+    setDragToCancel(false);
+    setPttMessage(null);
+    void startRecording();
+  }, [session?.currentStep, moving, audioState, startRecording]);
 
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       if (event.code === "Space" && !event.repeat && !target?.matches("input, textarea, button")) {
         event.preventDefault();
-        void startRecording();
+        beginRecording();
       }
     };
     const up = (event: KeyboardEvent) => {
-      if (event.code === "Space" && audioState === "RECORDING") {
+      if (event.code === "Space" && (recordingIntentRef.current || audioState === "RECORDING")) {
         event.preventDefault();
-        stopRecording();
+        stopRecording(false);
       }
     };
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
     return () => { window.removeEventListener("keydown", down); window.removeEventListener("keyup", up); };
-  }, [startRecording, stopRecording, audioState]);
+  }, [beginRecording, stopRecording, audioState]);
 
   const requestTranscript = async () => {
     if (revealedTranscript) { setRevealedTranscript(null); return; }
@@ -501,7 +591,7 @@ export function TrainerApp() {
               </span>
             </div>
             <div className="map-message"><span>Position</span><strong>{moving ? "Moving on accepted route" : positionLabel(session)}</strong></div>
-            {routes.length === 0 && <div className="route-locked"><span>Route locked</span><small>Correct readback required</small></div>}
+            {routes.length === 0 && <div className="route-locked"><span>Route appears after your readback</span><small>Take your time — help is available</small></div>}
           </div>
           <p className="attribution">© Civil Aviation Authority of Singapore · AD-2-WSSL-ADC-1-1 · Licensed training prototype</p>
         </section>
@@ -516,7 +606,7 @@ export function TrainerApp() {
             <span className={`step-tag tag-${session.copy.tag.toLowerCase().replaceAll(" ", "-")}`}>{session.copy.tag}</span>
             <h2>{session.copy.title}</h2>
             <p>{session.copy.detail}</p>
-            {feedback && <div className={`feedback-card feedback-${feedback.status.toLowerCase()}`} role="status"><strong>{feedback.status === "ACCEPTED" ? "Accepted" : feedback.status === "CORRECTION_REQUIRED" ? "Correction required" : "Try again"}</strong><span>{feedback.text}</span></div>}
+            {feedback && <div className={`feedback-card feedback-${feedback.status.toLowerCase()}`} role="status"><strong>{feedback.status === "ACCEPTED" ? "Nice work" : feedback.status === "CORRECTION_REQUIRED" ? "Almost there" : "No rush"}</strong><span>{feedback.text}</span></div>}
             {revealedTranscript && <div className="transcript-card"><span>ATC transcript</span><q>{revealedTranscript}</q></div>}
             {hint && <div className="phrase-tip"><span>Coaching hint</span><p>{hint.text}</p><q>{hint.phrase}</q></div>}
             {showNudge && !hint && <button className="nudge-button" onClick={() => void requestHint()}>Need a prompt? Show a hint</button>}
@@ -524,18 +614,35 @@ export function TrainerApp() {
 
           <div className="ptt-area">
             <button
-              className={`ptt-button ${audioState === "RECORDING" ? "recording" : ""}`}
-              aria-label={audioState === "RECORDING" ? "Release to send" : "Hold to talk"}
+              className={`ptt-button ${audioState === "RECORDING" ? "recording" : ""} ${dragToCancel ? "cancel-ready" : ""}`}
+              aria-label={audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : "Hold to talk"}
               disabled={isDisabled}
-              onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); void startRecording(); }}
-              onPointerUp={stopRecording}
-              onPointerCancel={stopRecording}
+              onPointerDown={(event) => {
+                pttPointerRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+                event.currentTarget.setPointerCapture(event.pointerId);
+                beginRecording();
+              }}
+              onPointerMove={(event) => {
+                const start = pttPointerRef.current;
+                if (!start || start.pointerId !== event.pointerId) return;
+                setDragToCancel(Math.hypot(event.clientX - start.x, event.clientY - start.y) >= DRAG_TO_CANCEL_DISTANCE);
+              }}
+              onPointerUp={(event) => {
+                const start = pttPointerRef.current;
+                const shouldCancel = Boolean(start && Math.hypot(event.clientX - start.x, event.clientY - start.y) >= DRAG_TO_CANCEL_DISTANCE);
+                pttPointerRef.current = null;
+                stopRecording(shouldCancel);
+              }}
+              onPointerCancel={() => {
+                pttPointerRef.current = null;
+                stopRecording(true);
+              }}
             >
               <span className="mic-glyph" aria-hidden="true">●</span>
-              <strong>{audioState === "RECORDING" ? "Release to send" : moving ? "Aircraft moving" : audioState === "PROCESSING" ? "Checking readback" : audioState === "PLAYING" ? "ATC speaking" : "Hold to talk"}</strong>
-              <small>{audioState === "READY" ? "or hold Space" : audioState.toLowerCase()}</small>
+              <strong>{audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : moving ? "Aircraft moving" : audioState === "PROCESSING" ? "Checking readback" : audioState === "PLAYING" ? "ATC speaking" : "Hold to talk"}</strong>
+              <small>{audioState === "RECORDING" ? (dragToCancel ? "No transmission will be sent" : "Drag away to cancel") : audioState === "READY" ? "or hold Space" : audioState.toLowerCase()}</small>
             </button>
-            <p><span className="level-bars" aria-hidden="true">▂▄▆▄▂</span>{session.provider === "OPENAI" ? "Secure voice provider ready" : "Browser voice · demo mode"}</p>
+            <p role={pttMessage ? "status" : undefined}><span className="level-bars" aria-hidden="true">▂▄▆▄▂</span>{pttMessage ?? (session.provider === "OPENAI" ? "Secure voice provider ready" : "Browser voice · demo mode")}</p>
           </div>
 
           <div className="assist-row">
@@ -604,7 +711,7 @@ function DebriefView({ session, debrief, onRestart }: { session: TrainerSession;
       <section className="metric-grid" aria-label="Session metrics">
         <article><strong>{debrief.metrics.accuracyPercent}%</strong><span>First-pass accuracy</span></article>
         <article><strong>{debrief.metrics.acceptedTransmissions}</strong><span>Accepted calls</span></article>
-        <article><strong>{debrief.metrics.corrections}</strong><span>Corrections</span></article>
+        <article><strong>{debrief.metrics.corrections}</strong><span>Practice retries</span></article>
         <article><strong>{debrief.metrics.sayAgainUses + debrief.metrics.transcriptReveals + debrief.metrics.hintsUsed}</strong><span>Assists used</span></article>
       </section>
       <section className="debrief-grid">

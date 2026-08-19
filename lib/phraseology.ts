@@ -60,3 +60,13 @@ export function speakPosition(positionId: string) {
   const label = kind.toLowerCase().replace(/^./, (character) => character.toUpperCase());
   return `${label} ${speakIdentifier(identifier)}`;
 }
+
+export function prepareSpeechText(text: string) {
+  return text
+    .replace(/\b9V[- ]?BCA\b/gi, "9 Victor Bravo Charlie Alpha")
+    .replace(/\bWP\b/gi, "Whiskey Papa")
+    .replace(/\bW1\b/gi, "Whiskey One")
+    .replace(/\bC6\b/gi, "Charlie Six")
+    .replace(/\b118\.450\b/g, "one one eight decimal four five")
+    .replace(/\b121\.600\b/g, "one two one decimal six");
+}

@@ -18,7 +18,7 @@ test("completes the full parking-to-airborne training journey", async ({ page })
   for (const [index, phrase] of phrases.entries()) {
     await textarea.fill(phrase);
     await page.getByRole("button", { name: "Transmit text" }).click();
-    await expect(page.getByText("Readback accepted.")).toBeVisible();
+    await expect(page.getByText("Nice work — readback accepted.")).toBeVisible();
     if (index === 1 || index === 4 || index === 5) {
       await expect(page.getByRole("button", { name: "Transmit text" })).toBeEnabled({ timeout: 12_000 });
     }
@@ -38,7 +38,7 @@ test("sends only one say-again request for rapid repeat clicks", async ({ page }
   await page.getByText("Prototype text test console").click();
   await page.getByPlaceholder("Type a learner transmission…").fill(phrases[0]);
   await page.getByRole("button", { name: "Transmit text" }).click();
-  await expect(page.getByText("Readback accepted.")).toBeVisible();
+  await expect(page.getByText("Nice work — readback accepted.")).toBeVisible();
 
   await page.getByRole("button", { name: "Say again" }).evaluate((button: HTMLButtonElement) => {
     button.click();

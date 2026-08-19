@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import evaluationData from "@/data/evaluation-cases.v1.json";
+import { isSilentRecording } from "@/lib/audio";
 import { buildDebrief } from "@/lib/debrief";
-import { speakFrequency, speakIdentifier, speakPosition } from "@/lib/phraseology";
+import { prepareSpeechText, speakFrequency, speakIdentifier, speakPosition } from "@/lib/phraseology";
 import { publicScenarioData, scenario } from "@/lib/scenario";
-import { parseTransmission, validateTransmission } from "@/lib/transmission";
+import { correctionFor, parseTransmission, validateTransmission } from "@/lib/transmission";
 
 describe("WSSL scenario package", () => {
   it("loads a build-validated scenario with hidden routes", () => {
@@ -39,11 +40,21 @@ describe("WSSL scenario package", () => {
     expect(speakIdentifier("21")).toBe("Two One");
     expect(speakPosition("STAND_C6")).toBe("Stand Charlie Six");
     expect(speakFrequency("118.450")).toBe("One One Eight Decimal Four Five");
+    expect(prepareSpeechText("Proceed via WP to W1, 9V-BCA.")).toBe(
+      "Proceed via Whiskey Papa to Whiskey One, 9 Victor Bravo Charlie Alpha.",
+    );
   });
 
   it("contains at least 120 labeled evaluation cases awaiting SME review", () => {
     expect(evaluationData.cases.length).toBeGreaterThanOrEqual(120);
     expect(evaluationData.reviewStatus).toBe("AWAITING_SME_LABEL_REVIEW");
+  });
+
+  it("treats silent push-to-talk input as a cancelled recording", () => {
+    expect(isSilentRecording("", 0)).toBe(true);
+    expect(isSilentRecording("   ", 2)).toBe(true);
+    expect(isSilentRecording("", 3)).toBe(false);
+    expect(isSilentRecording("Whiskey Papa", 0)).toBe(false);
   });
 });
 
@@ -56,6 +67,17 @@ describe("deterministic readback validation", () => {
     expect(parsed.taxiways).toEqual(["WP"]);
     expect(parsed.holdingPoint).toBe("W1");
     expect(validateTransmission(step.instruction, parsed, step.successTransition).status).toBe("ACCEPTED");
+  });
+
+  it("uses calm coaching language and expands taxiway arrays in corrections", () => {
+    const step = scenario.steps.find((candidate) => candidate.id === "taxi-readback")!;
+    const parsed = parseTransmission("Holding point Whiskey One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.");
+    const result = validateTransmission(step.instruction, parsed, step.successTransition);
+    const message = correctionFor(result);
+
+    expect(message).toContain("you're close");
+    expect(message).toContain("taxiway should be Whiskey Papa");
+    expect(message).not.toMatch(/\bWP\b|negative|wrong/i);
   });
 
   for (const fixture of evaluationData.cases) {

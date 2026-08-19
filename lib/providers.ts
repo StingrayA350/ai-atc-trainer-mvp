@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { prepareSpeechText } from "./phraseology";
 import { parseTransmission } from "./transmission";
 import { parsedTransmissionSchema, type ParsedTransmission, type ScenarioStep } from "./schemas";
 
@@ -105,9 +106,10 @@ export async function synthesizeControllerSpeech(text: string) {
     body: JSON.stringify({
       model: config().OPENAI_TTS_MODEL || "gpt-4o-mini-tts",
       voice: "coral",
-      input: text,
+      input: prepareSpeechText(text),
+      instructions: "Speak like a calm, patient air traffic control instructor helping a first-time learner. Use a warm, reassuring tone, an unhurried pace, and clear pauses. Pronounce every aviation phonetic word fully. Always say Whiskey Papa in full; never pronounce WP as two letters.",
       response_format: "mp3",
-      speed: 1,
+      speed: 0.95,
     }),
   });
   if (!response.ok) return null;

@@ -105,7 +105,7 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
 .feedback-card { margin-top: 17px; padding: 11px 13px; border-radius: 8px; display: grid; gap: 3px; font-size: 10px; line-height: 1.45; }
 .feedback-card strong { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
 .feedback-accepted { background: #edf8e8; border: 1px solid #cce8bd; color: #326c2b; }
-.feedback-correction_required { background: #fff3ec; border: 1px solid #f0cdbd; color: #9c452d; }
+.feedback-correction_required { background: #fff9e7; border: 1px solid #eadcb7; color: #665b31; }
 .feedback-clarification_required { background: #eef4f5; border: 1px solid #ccdcde; color: #3c6469; }
 .transcript-card { margin-top: 17px; padding: 13px 14px; border: 1px solid #cedbd7; background: #f5f8f6; border-radius: 8px; display: grid; gap: 6px; }
 .transcript-card span { color: #687774; font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
@@ -117,10 +117,12 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
 .nudge-button { margin-top: 16px; border: 0; background: transparent; color: #537c42; padding: 0; font-size: 10px; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .ptt-area { display: grid; justify-items: center; padding: 12px 0 17px; }
 .ptt-button { width: 150px; height: 150px; border-radius: 50%; border: 9px solid #e6ecdf; background: var(--mint); color: #173017; display: grid; place-content: center; justify-items: center; gap: 5px; cursor: pointer; box-shadow: inset 0 -8px 0 #a6df70, 0 8px 24px #7eb34f30; transition: transform .18s; }
+.ptt-button { touch-action: none; }
 .ptt-button:hover { transform: translateY(-2px); }
 .ptt-button:active { transform: scale(.96); box-shadow: inset 0 5px 0 #8cc65c; }
 .ptt-button:disabled { cursor: not-allowed; filter: grayscale(.4); opacity: .68; transform: none; }
 .ptt-button.recording { background: #ff9b7f; box-shadow: inset 0 -8px 0 #e77c61, 0 0 0 10px #ffd8cd; animation: recordPulse 1s ease-in-out infinite alternate; }
+.ptt-button.recording.cancel-ready { background: #e7eeeb; color: #344c47; box-shadow: inset 0 -8px 0 #bccac5, 0 0 0 10px #e7eeeb99; animation: none; }
 @keyframes recordPulse { to { box-shadow: inset 0 -8px 0 #e77c61, 0 0 0 18px #ffd8cd55; } }
 .mic-glyph { width: 20px; height: 27px; border: 2px solid #23451f; border-radius: 10px; color: transparent; position: relative; }
 .mic-glyph:after { content: ""; position: absolute; width: 26px; height: 13px; border: 2px solid #23451f; border-top: 0; border-radius: 0 0 15px 15px; left: -5px; top: 13px; }
