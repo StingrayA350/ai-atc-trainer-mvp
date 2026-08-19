@@ -1,0 +1,169 @@
+{
+  "id": "wssl-c172-stand-c6-rwy21",
+  "version": "1.1.0-draft",
+  "airportDataVersion": "WSSL-ADC-2025-08-07",
+  "aircraft": { "type": "C172", "callsign": "9V-BCA" },
+  "startPositionId": "STAND_C6",
+  "routeIds": ["C6_WP_W1", "W1_RWY21_LINEUP", "RWY21_TAKEOFF"],
+  "initialState": "PARKED",
+  "airport": {
+    "icao": "WSSL",
+    "name": "Singapore / Seletar",
+    "groundFrequency": "121.600",
+    "towerFrequency": "118.450",
+    "runway": "21"
+  },
+  "metadata": {
+    "source": "CAAS AIP Singapore AD-2-WSSL-ADC-1-1 and AD-2-WSSL-ADC-1-2",
+    "publicationVersion": "AIP AMDT 04/2025",
+    "effectiveDate": "2025-08-07",
+    "importedAt": "2026-08-19T00:00:00.000Z",
+    "licenseReference": "PROTOTYPE-LICENSE-REFERENCE-REQUIRED",
+    "validatedBy": "CHART-DERIVED; PENDING-SME-SIGNOFF",
+    "validationStatus": "AWAITING_SME_SIGNOFF"
+  },
+  "routes": {
+    "C6_WP_W1": {
+      "id": "C6_WP_W1",
+      "label": "Stand C6 via WP to holding point W1",
+      "kind": "TAXI",
+      "movementState": "TAXIING",
+      "completionState": "HOLDING_POINT",
+      "completionControllerText": "9V-BCA, contact Seletar Tower on one one eight decimal four five.",
+      "points": [[37.3, 39.3], [39.7, 38.7], [41.4, 37.9], [42.8, 35.2], [44.2, 32.8], [45.6, 30.4], [47.2, 29.5], [49.1, 30.0], [50.4, 31.0]],
+      "durationMs": 6000
+    },
+    "W1_RWY21_LINEUP": {
+      "id": "W1_RWY21_LINEUP",
+      "label": "W1 to runway 21 line-up",
+      "kind": "LINE_UP",
+      "movementState": "TAKEOFF_READBACK_PENDING",
+      "completionState": "TAKEOFF_READBACK_PENDING",
+      "completionControllerText": "9V-BCA, runway two one, cleared for takeoff.",
+      "points": [[50.4, 31.0], [51.7, 30.5], [53.3, 30.8], [52.0, 33.0]],
+      "durationMs": 3000
+    },
+    "RWY21_TAKEOFF": {
+      "id": "RWY21_TAKEOFF",
+      "label": "Runway 21 takeoff roll and lift-off",
+      "kind": "TAKEOFF",
+      "movementState": "TAKEOFF_ROLL",
+      "completionState": "COMPLETE",
+      "completionControllerText": "9V-BCA, airborne. Exercise complete.",
+      "points": [[52.0, 33.0], [49.8, 35.8], [47.2, 39.4], [44.5, 43.3]],
+      "durationMs": 5500
+    }
+  },
+  "steps": [
+    {
+      "id": "contact-ground",
+      "state": "READY_FOR_GROUND",
+      "initiator": "STUDENT",
+      "controller": "GROUND",
+      "instruction": {
+        "instructionType": "GROUND_CONTACT",
+        "callsign": "9V-BCA",
+        "runway": "21",
+        "action": "REQUEST_TAXI",
+        "requiredFields": ["CALLSIGN", "RUNWAY", "ACTION"],
+        "approvedSpokenText": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one."
+      },
+      "successTransition": "TAXI_READBACK_PENDING",
+      "successControllerText": "9V-BCA, taxi to holding point Whiskey One, runway two one, via Whiskey Papa. Hold short of runway two one.",
+      "hint": "Call Seletar Ground with your callsign, stand, aircraft type, assigned runway, and taxi request."
+    },
+    {
+      "id": "taxi-readback",
+      "state": "TAXI_READBACK_PENDING",
+      "initiator": "STUDENT",
+      "controller": "GROUND",
+      "instruction": {
+        "instructionType": "TAXI",
+        "callsign": "9V-BCA",
+        "taxiways": ["WP"],
+        "runway": "21",
+        "holdingPoint": "W1",
+        "action": "HOLD_SHORT",
+        "requiredFields": ["CALLSIGN", "TAXIWAYS", "RUNWAY", "HOLDING_POINT", "ACTION"],
+        "approvedSpokenText": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA."
+      },
+      "successTransition": "TAXIING",
+      "routeToReveal": "C6_WP_W1",
+      "successControllerText": "9V-BCA, readback correct. Taxi via Whiskey Papa to Whiskey One.",
+      "hint": "Read back taxiway WP, holding point W1, runway 21, and the hold-short instruction."
+    },
+    {
+      "id": "frequency-readback",
+      "state": "HOLDING_POINT",
+      "initiator": "STUDENT",
+      "controller": "GROUND",
+      "instruction": {
+        "instructionType": "FREQUENCY_CHANGE",
+        "callsign": "9V-BCA",
+        "frequency": "118.450",
+        "action": "CONTACT_TOWER",
+        "requiredFields": ["CALLSIGN", "FREQUENCY"],
+        "approvedSpokenText": "One one eight decimal four five, 9V-BCA."
+      },
+      "successTransition": "TOWER_CONTACT",
+      "successControllerText": "9V-BCA, contact Seletar Tower.",
+      "successController": "TOWER",
+      "successFrequency": "118.450",
+      "hint": "Read back the Tower frequency: 118.45."
+    },
+    {
+      "id": "contact-tower",
+      "state": "TOWER_CONTACT",
+      "initiator": "STUDENT",
+      "controller": "TOWER",
+      "instruction": {
+        "instructionType": "TOWER_CONTACT",
+        "callsign": "9V-BCA",
+        "runway": "21",
+        "holdingPoint": "W1",
+        "action": "READY_DEPARTURE",
+        "requiredFields": ["CALLSIGN", "RUNWAY", "HOLDING_POINT", "ACTION"],
+        "approvedSpokenText": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure."
+      },
+      "successTransition": "RUNWAY_HOLD_OR_LINE_UP",
+      "successControllerText": "9V-BCA, runway two one, line up and wait.",
+      "hint": "Tell Tower your callsign, W1 holding position, runway 21, and that you are ready for departure."
+    },
+    {
+      "id": "line-up-readback",
+      "state": "RUNWAY_HOLD_OR_LINE_UP",
+      "initiator": "STUDENT",
+      "controller": "TOWER",
+      "instruction": {
+        "instructionType": "LINE_UP",
+        "callsign": "9V-BCA",
+        "runway": "21",
+        "action": "LINE_UP_WAIT",
+        "requiredFields": ["CALLSIGN", "RUNWAY", "ACTION"],
+        "approvedSpokenText": "Line up and wait runway two one, 9V-BCA."
+      },
+      "successTransition": "TAKEOFF_READBACK_PENDING",
+      "routeToReveal": "W1_RWY21_LINEUP",
+      "successControllerText": "9V-BCA, readback correct. Line up and wait runway two one.",
+      "hint": "Read back runway 21 and the full line-up-and-wait instruction."
+    },
+    {
+      "id": "takeoff-readback",
+      "state": "TAKEOFF_READBACK_PENDING",
+      "initiator": "STUDENT",
+      "controller": "TOWER",
+      "instruction": {
+        "instructionType": "TAKEOFF",
+        "callsign": "9V-BCA",
+        "runway": "21",
+        "action": "CLEARED_TAKEOFF",
+        "requiredFields": ["CALLSIGN", "RUNWAY", "ACTION"],
+        "approvedSpokenText": "Cleared for takeoff runway two one, 9V-BCA."
+      },
+      "successTransition": "TAKEOFF_ROLL",
+      "routeToReveal": "RWY21_TAKEOFF",
+      "successControllerText": "9V-BCA, readback correct. Cleared for takeoff runway two one.",
+      "hint": "Read back your callsign, runway 21, and the takeoff clearance."
+    }
+  ]
+}

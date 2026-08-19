@@ -1,0 +1,7 @@
+# Copy this file to .dev.vars, then fill in the key locally.
+# Never commit a real API key.
+OPENAI_API_KEY=replace_with_your_openai_api_key
+
+OPENAI_STT_MODEL=gpt-transcribe
+OPENAI_INTERPRETER_MODEL=gpt-5.6-luna
+OPENAI_TTS_MODEL=gpt-4o-mini-tts

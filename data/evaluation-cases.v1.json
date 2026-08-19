@@ -1,0 +1,1074 @@
+{
+  "version": "1.0.0-draft",
+  "reviewStatus": "AWAITING_SME_LABEL_REVIEW",
+  "cases": [
+    {
+      "id": "contact-ground-correct-1",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "contact-ground-correct-2",
+      "stepId": "contact-ground",
+      "transcript": "SELETAR GROUND, 9V-BCA, CESSNA 172 AT STAND CHARLIE SIX, REQUEST TAXI RUNWAY TWO ONE.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "contact-ground-correct-3",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, nine victor bravo charlie alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "contact-ground-correct-4",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, niner victor bravo charlie alpha, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "contact-ground-correct-5",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground 9V-BCA Cessna 172 at stand Charlie Six request taxi runway two one",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "contact-ground-correct-6",
+      "stepId": "contact-ground",
+      "transcript": "Roger, Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "contact-ground-correct-7",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one. Wilco.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "contact-ground-correct-8",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway 21.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "contact-ground-correct-9",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "contact-ground-correct-10",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "contact-ground-safety-1",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCD, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-callsign"
+    },
+    {
+      "id": "contact-ground-safety-2",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground., Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "omission"
+    },
+    {
+      "id": "contact-ground-safety-3",
+      "stepId": "contact-ground",
+      "transcript": "9V-BCD, standby.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "unrelated"
+    },
+    {
+      "id": "contact-ground-safety-4",
+      "stepId": "contact-ground",
+      "transcript": "Say again.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "assistance"
+    },
+    {
+      "id": "contact-ground-safety-5",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway zero three.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-value"
+    },
+    {
+      "id": "contact-ground-safety-6",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "truncated"
+    },
+    {
+      "id": "contact-ground-safety-7",
+      "stepId": "contact-ground",
+      "transcript": "Seletar Ground, 9V-BCA, Cessna 172 at stand Charlie Six, request taxi runway two one.",
+      "confidence": 0.41,
+      "expectedStatus": "CLARIFICATION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "low-confidence"
+    },
+    {
+      "id": "contact-ground-safety-8",
+      "stepId": "contact-ground",
+      "transcript": "nine victor bravo charlie, roger",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "incomplete"
+    },
+    {
+      "id": "contact-ground-safety-9",
+      "stepId": "contact-ground",
+      "transcript": "Unable, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "contact-ground-safety-10",
+      "stepId": "contact-ground",
+      "transcript": "Standby, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "taxi-readback-correct-1",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "taxi-readback-correct-2",
+      "stepId": "taxi-readback",
+      "transcript": "TAXI VIA WHISKEY PAPA TO HOLDING POINT WHISKEY ONE, HOLD SHORT OF RUNWAY TWO ONE, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "taxi-readback-correct-3",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, nine victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "taxi-readback-correct-4",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, niner victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "taxi-readback-correct-5",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One hold short of runway two one 9V-BCA",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "taxi-readback-correct-6",
+      "stepId": "taxi-readback",
+      "transcript": "Roger, Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "taxi-readback-correct-7",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA. Wilco.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "taxi-readback-correct-8",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway 21, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "taxi-readback-correct-9",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point W1, hold short of runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "taxi-readback-correct-10",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via WP to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "taxi-readback-safety-1",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCD.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-callsign"
+    },
+    {
+      "id": "taxi-readback-safety-2",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "omission"
+    },
+    {
+      "id": "taxi-readback-safety-3",
+      "stepId": "taxi-readback",
+      "transcript": "9V-BCD, standby.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "unrelated"
+    },
+    {
+      "id": "taxi-readback-safety-4",
+      "stepId": "taxi-readback",
+      "transcript": "Say again.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "assistance"
+    },
+    {
+      "id": "taxi-readback-safety-5",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway zero three, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-value"
+    },
+    {
+      "id": "taxi-readback-safety-6",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "truncated"
+    },
+    {
+      "id": "taxi-readback-safety-7",
+      "stepId": "taxi-readback",
+      "transcript": "Taxi via Whiskey Papa to holding point Whiskey One, hold short of runway two one, 9V-BCA.",
+      "confidence": 0.41,
+      "expectedStatus": "CLARIFICATION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "low-confidence"
+    },
+    {
+      "id": "taxi-readback-safety-8",
+      "stepId": "taxi-readback",
+      "transcript": "nine victor bravo charlie, roger",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "incomplete"
+    },
+    {
+      "id": "taxi-readback-safety-9",
+      "stepId": "taxi-readback",
+      "transcript": "Unable, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "taxi-readback-safety-10",
+      "stepId": "taxi-readback",
+      "transcript": "Standby, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "frequency-readback-correct-1",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "frequency-readback-correct-2",
+      "stepId": "frequency-readback",
+      "transcript": "ONE ONE EIGHT DECIMAL FOUR FIVE, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "frequency-readback-correct-3",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, nine victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "frequency-readback-correct-4",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, niner victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "frequency-readback-correct-5",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five 9V-BCA",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "frequency-readback-correct-6",
+      "stepId": "frequency-readback",
+      "transcript": "Roger, One one eight decimal four five, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "frequency-readback-correct-7",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCA. Wilco.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "frequency-readback-correct-8",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "frequency-readback-correct-9",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "frequency-readback-correct-10",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "frequency-readback-safety-1",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCD.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-callsign"
+    },
+    {
+      "id": "frequency-readback-safety-2",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "omission"
+    },
+    {
+      "id": "frequency-readback-safety-3",
+      "stepId": "frequency-readback",
+      "transcript": "9V-BCD, standby.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "unrelated"
+    },
+    {
+      "id": "frequency-readback-safety-4",
+      "stepId": "frequency-readback",
+      "transcript": "Say again.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "assistance"
+    },
+    {
+      "id": "frequency-readback-safety-5",
+      "stepId": "frequency-readback",
+      "transcript": "One two one decimal six, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-value"
+    },
+    {
+      "id": "frequency-readback-safety-6",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "truncated"
+    },
+    {
+      "id": "frequency-readback-safety-7",
+      "stepId": "frequency-readback",
+      "transcript": "One one eight decimal four five, 9V-BCA.",
+      "confidence": 0.41,
+      "expectedStatus": "CLARIFICATION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "low-confidence"
+    },
+    {
+      "id": "frequency-readback-safety-8",
+      "stepId": "frequency-readback",
+      "transcript": "nine victor bravo charlie, roger",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "incomplete"
+    },
+    {
+      "id": "frequency-readback-safety-9",
+      "stepId": "frequency-readback",
+      "transcript": "Unable, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "frequency-readback-safety-10",
+      "stepId": "frequency-readback",
+      "transcript": "Standby, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "contact-tower-correct-1",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "contact-tower-correct-2",
+      "stepId": "contact-tower",
+      "transcript": "SELETAR TOWER, 9V-BCA, HOLDING SHORT AT WHISKEY ONE, RUNWAY TWO ONE, READY FOR DEPARTURE.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "contact-tower-correct-3",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, nine victor bravo charlie alpha, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "contact-tower-correct-4",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, niner victor bravo charlie alpha, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "contact-tower-correct-5",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower 9V-BCA holding short at Whiskey One runway two one ready for departure",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "contact-tower-correct-6",
+      "stepId": "contact-tower",
+      "transcript": "Roger, Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "contact-tower-correct-7",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure. Wilco.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "contact-tower-correct-8",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway 21, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "contact-tower-correct-9",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at W1, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "contact-tower-correct-10",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "contact-tower-safety-1",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCD, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-callsign"
+    },
+    {
+      "id": "contact-tower-safety-2",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower., holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "omission"
+    },
+    {
+      "id": "contact-tower-safety-3",
+      "stepId": "contact-tower",
+      "transcript": "9V-BCD, standby.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "unrelated"
+    },
+    {
+      "id": "contact-tower-safety-4",
+      "stepId": "contact-tower",
+      "transcript": "Say again.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "assistance"
+    },
+    {
+      "id": "contact-tower-safety-5",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway zero three, ready for departure.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-value"
+    },
+    {
+      "id": "contact-tower-safety-6",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "truncated"
+    },
+    {
+      "id": "contact-tower-safety-7",
+      "stepId": "contact-tower",
+      "transcript": "Seletar Tower, 9V-BCA, holding short at Whiskey One, runway two one, ready for departure.",
+      "confidence": 0.41,
+      "expectedStatus": "CLARIFICATION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "low-confidence"
+    },
+    {
+      "id": "contact-tower-safety-8",
+      "stepId": "contact-tower",
+      "transcript": "nine victor bravo charlie, roger",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "incomplete"
+    },
+    {
+      "id": "contact-tower-safety-9",
+      "stepId": "contact-tower",
+      "transcript": "Unable, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "contact-tower-safety-10",
+      "stepId": "contact-tower",
+      "transcript": "Standby, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "line-up-readback-correct-1",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "line-up-readback-correct-2",
+      "stepId": "line-up-readback",
+      "transcript": "LINE UP AND WAIT RUNWAY TWO ONE, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "line-up-readback-correct-3",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, nine victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "line-up-readback-correct-4",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, niner victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "line-up-readback-correct-5",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one 9V-BCA",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "line-up-readback-correct-6",
+      "stepId": "line-up-readback",
+      "transcript": "Roger, Line up and wait runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "line-up-readback-correct-7",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, 9V-BCA. Wilco.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "line-up-readback-correct-8",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway 21, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "line-up-readback-correct-9",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "line-up-readback-correct-10",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "line-up-readback-safety-1",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, 9V-BCD.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-callsign"
+    },
+    {
+      "id": "line-up-readback-safety-2",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "omission"
+    },
+    {
+      "id": "line-up-readback-safety-3",
+      "stepId": "line-up-readback",
+      "transcript": "9V-BCD, standby.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "unrelated"
+    },
+    {
+      "id": "line-up-readback-safety-4",
+      "stepId": "line-up-readback",
+      "transcript": "Say again.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "assistance"
+    },
+    {
+      "id": "line-up-readback-safety-5",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway zero three, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-value"
+    },
+    {
+      "id": "line-up-readback-safety-6",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "truncated"
+    },
+    {
+      "id": "line-up-readback-safety-7",
+      "stepId": "line-up-readback",
+      "transcript": "Line up and wait runway two one, 9V-BCA.",
+      "confidence": 0.41,
+      "expectedStatus": "CLARIFICATION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "low-confidence"
+    },
+    {
+      "id": "line-up-readback-safety-8",
+      "stepId": "line-up-readback",
+      "transcript": "nine victor bravo charlie, roger",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "incomplete"
+    },
+    {
+      "id": "line-up-readback-safety-9",
+      "stepId": "line-up-readback",
+      "transcript": "Unable, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "line-up-readback-safety-10",
+      "stepId": "line-up-readback",
+      "transcript": "Standby, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "takeoff-readback-correct-1",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "takeoff-readback-correct-2",
+      "stepId": "takeoff-readback",
+      "transcript": "CLEARED FOR TAKEOFF RUNWAY TWO ONE, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "takeoff-readback-correct-3",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, nine victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "takeoff-readback-correct-4",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, niner victor bravo charlie alpha.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "takeoff-readback-correct-5",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one 9V-BCA",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "takeoff-readback-correct-6",
+      "stepId": "takeoff-readback",
+      "transcript": "Roger, Cleared for takeoff runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "clean-headset"
+    },
+    {
+      "id": "takeoff-readback-correct-7",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, 9V-BCA. Wilco.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "laptop-mic"
+    },
+    {
+      "id": "takeoff-readback-correct-8",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway 21, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "light-noise"
+    },
+    {
+      "id": "takeoff-readback-correct-9",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "accent-variant"
+    },
+    {
+      "id": "takeoff-readback-correct-10",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "ACCEPTED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "hesitation"
+    },
+    {
+      "id": "takeoff-readback-safety-1",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, 9V-BCD.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-callsign"
+    },
+    {
+      "id": "takeoff-readback-safety-2",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "omission"
+    },
+    {
+      "id": "takeoff-readback-safety-3",
+      "stepId": "takeoff-readback",
+      "transcript": "9V-BCD, standby.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "unrelated"
+    },
+    {
+      "id": "takeoff-readback-safety-4",
+      "stepId": "takeoff-readback",
+      "transcript": "Say again.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "assistance"
+    },
+    {
+      "id": "takeoff-readback-safety-5",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway zero three, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "wrong-value"
+    },
+    {
+      "id": "takeoff-readback-safety-6",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "truncated"
+    },
+    {
+      "id": "takeoff-readback-safety-7",
+      "stepId": "takeoff-readback",
+      "transcript": "Cleared for takeoff runway two one, 9V-BCA.",
+      "confidence": 0.41,
+      "expectedStatus": "CLARIFICATION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "low-confidence"
+    },
+    {
+      "id": "takeoff-readback-safety-8",
+      "stepId": "takeoff-readback",
+      "transcript": "nine victor bravo charlie, roger",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW",
+      "audioProfile": "incomplete"
+    },
+    {
+      "id": "takeoff-readback-safety-9",
+      "stepId": "takeoff-readback",
+      "transcript": "Unable, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    },
+    {
+      "id": "takeoff-readback-safety-10",
+      "stepId": "takeoff-readback",
+      "transcript": "Standby, 9V-BCA.",
+      "confidence": 0.96,
+      "expectedStatus": "CORRECTION_REQUIRED",
+      "labelSource": "ENGINEERING_DRAFT_NEEDS_SME_REVIEW"
+    }
+  ]
+}
