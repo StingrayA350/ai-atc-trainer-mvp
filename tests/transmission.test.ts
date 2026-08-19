@@ -59,6 +59,16 @@ describe("WSSL scenario package", () => {
 });
 
 describe("deterministic readback validation", () => {
+  it("accepts the aviation pronunciation niner anywhere 9 is expected in the call sign", () => {
+    const step = scenario.steps.find((candidate) => candidate.id === "contact-ground")!;
+    const nine = parseTransmission("Seletar Ground, nine Victor Bravo Charlie Alpha, request taxi runway two one.");
+    const niner = parseTransmission("Seletar Ground, niner Victor Bravo Charlie Alpha, request taxi runway two one.");
+
+    expect(niner.callsign).toBe("9V-BCA");
+    expect(niner.callsign).toBe(nine.callsign);
+    expect(validateTransmission(step.instruction, niner, step.successTransition).status).toBe("ACCEPTED");
+  });
+
   it("accepts Whiskey or Whisky Papa rather than requiring the letters W P", () => {
     const step = scenario.steps.find((candidate) => candidate.id === "taxi-readback")!;
     const transcript = "Taxi via Whisky Papa to holding point Whisky One, hold short of runway two one, 9 Victor Bravo Charlie Alpha.";

@@ -58,8 +58,9 @@ const parsedTransmissionJsonSchema = {
 };
 
 export async function interpretTranscript(transcript: string, step: ScenarioStep, confidence = 0.99): Promise<ParsedTransmission> {
+  const deterministicParse = parseTransmission(transcript, confidence);
   const key = apiKey();
-  if (!key) return parseTransmission(transcript, confidence);
+  if (!key) return deterministicParse;
 
   try {
     const response = await fetch("https://api.openai.com/v1/responses", {
@@ -70,7 +71,7 @@ export async function interpretTranscript(transcript: string, step: ScenarioStep
         input: [
           {
             role: "system",
-            content: "Extract only the stated aviation readback fields. Never infer a clearance element that was not spoken. Normalize ICAO phonetics, runway digits, taxiway identifiers, holding points, frequencies, and callsigns. Treat Whiskey Papa or Whisky Papa as taxiway WP, Whiskey One or Whisky One as holding point W1, and 9 Victor Bravo Charlie Alpha as callsign 9V-BCA.",
+            content: "Extract only the stated aviation readback fields. Never infer a clearance element that was not spoken. Normalize ICAO phonetics, runway digits, taxiway identifiers, holding points, frequencies, and callsigns. Treat the aviation digit word niner, the word nine, and the digit 9 as equivalent. Therefore Niner Victor Bravo Charlie Alpha, Nine Victor Bravo Charlie Alpha, and 9 Victor Bravo Charlie Alpha all mean callsign 9V-BCA. Treat Whiskey Papa or Whisky Papa as taxiway WP and Whiskey One or Whisky One as holding point W1.",
           },
           {
             role: "user",
@@ -91,9 +92,12 @@ export async function interpretTranscript(transcript: string, step: ScenarioStep
     const body = await response.json() as { output_text?: string };
     const parsed = JSON.parse(body.output_text ?? "{}");
     const cleaned = Object.fromEntries(Object.entries(parsed).filter(([, value]) => value !== null));
-    return parsedTransmissionSchema.parse(cleaned);
+    const interpreted = parsedTransmissionSchema.parse(cleaned);
+    return deterministicParse.callsign === step.instruction.callsign
+      ? { ...interpreted, callsign: deterministicParse.callsign }
+      : interpreted;
   } catch {
-    return parseTransmission(transcript, confidence);
+    return deterministicParse;
   }
 }
 
