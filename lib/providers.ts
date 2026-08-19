@@ -69,7 +69,7 @@ export async function interpretTranscript(transcript: string, step: ScenarioStep
         input: [
           {
             role: "system",
-            content: "Extract only the stated aviation readback fields. Never infer a clearance element that was not spoken. Normalize ICAO phonetics, runway digits, taxiway identifiers, holding points, frequencies, and callsigns. Treat the aviation digit word niner, the word nine, and the digit 9 as equivalent. Therefore Niner Victor Bravo Charlie Alpha, Nine Victor Bravo Charlie Alpha, and 9 Victor Bravo Charlie Alpha all mean callsign 9V-BCA. Treat Whiskey Papa or Whisky Papa as taxiway WP and Whiskey One or Whisky One as holding point W1.",
+            content: "Extract only the stated aviation readback fields. Never infer a clearance element that was not spoken. Normalize ICAO phonetics, runway digits, taxiway identifiers, holding points, frequencies, and callsigns. Treat the aviation digit word niner, the word nine, and the digit 9 as equivalent. Therefore Niner Victor Bravo Charlie Alpha, Nine Victor Bravo Charlie Alpha, and 9 Victor Bravo Charlie Alpha all mean callsign 9V-BCA. Treat Whiskey Papa or Whisky Papa as taxiway WP and Whiskey One or Whisky One as holding point W1. When a pilot requests taxi to the active runway, return runway ACTIVE and action REQUEST_TAXI; do not invent a runway number.",
           },
           {
             role: "user",
@@ -91,9 +91,15 @@ export async function interpretTranscript(transcript: string, step: ScenarioStep
     const parsed = JSON.parse(body.output_text ?? "{}");
     const cleaned = Object.fromEntries(Object.entries(parsed).filter(([, value]) => value !== null));
     const interpreted = parsedTransmissionSchema.parse(cleaned);
-    return deterministicParse.callsign === step.instruction.callsign
-      ? { ...interpreted, callsign: deterministicParse.callsign }
-      : interpreted;
+    return {
+      ...interpreted,
+      ...(deterministicParse.callsign === step.instruction.callsign
+        ? { callsign: deterministicParse.callsign }
+        : {}),
+      ...(deterministicParse.runway === "ACTIVE"
+        ? { runway: "ACTIVE", action: deterministicParse.action }
+        : {}),
+    };
   } catch {
     return deterministicParse;
   }

@@ -70,6 +70,31 @@ describe("WSSL scenario package", () => {
 });
 
 describe("deterministic readback validation", () => {
+  it("accepts an active-runway taxi request when first contacting Ground", () => {
+    const step = scenario.steps.find((candidate) => candidate.id === "contact-ground")!;
+    const variants = [
+      "Seletar Ground, niner Victor Bravo Charlie Alpha, requesting to active runway.",
+      "Seletar Ground, niner Victor Bravo Charlie Alpha, request taxi to the active runway.",
+    ];
+
+    for (const transcript of variants) {
+      const parsed = parseTransmission(transcript);
+      expect(parsed.runway).toBe("ACTIVE");
+      expect(parsed.action).toBe("REQUEST_TAXI");
+      expect(validateTransmission(step.instruction, parsed, step.successTransition).status).toBe("ACCEPTED");
+    }
+  });
+
+  it("still requires the runway number in safety-critical readbacks", () => {
+    const step = scenario.steps.find((candidate) => candidate.id === "taxi-readback")!;
+    const parsed = parseTransmission(
+      "Taxi via Whiskey Papa to holding point Whiskey One, hold short of the active runway, niner Victor Bravo Charlie Alpha.",
+    );
+
+    expect(parsed.runway).toBe("ACTIVE");
+    expect(validateTransmission(step.instruction, parsed, step.successTransition).status).toBe("CORRECTION_REQUIRED");
+  });
+
   it("accepts the aviation pronunciation niner anywhere 9 is expected in the call sign", () => {
     const step = scenario.steps.find((candidate) => candidate.id === "contact-ground")!;
     const nine = parseTransmission("Seletar Ground, nine Victor Bravo Charlie Alpha, request taxi runway two one.");

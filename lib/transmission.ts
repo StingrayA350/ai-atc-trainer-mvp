@@ -42,6 +42,7 @@ function extractCallsign(text: string) {
 }
 
 function extractRunway(text: string) {
+  if (/\b(?:the\s+)?active\s+runway\b|\brunway\s+(?:currently\s+)?active\b/.test(text)) return "ACTIVE";
   const runway = text.match(/runway\s+([0-9]{1,2})(?:\s+([0-9]))?/);
   if (!runway) return undefined;
   if (runway[1].length === 2) return runway[1];
@@ -73,6 +74,7 @@ function extractAction(text: string) {
   if (/line\s+up\s+and\s+wait/.test(text)) return "LINE_UP_WAIT";
   if (/ready\s+(?:for\s+)?departure|ready\s+(?:for\s+)?take\s*off/.test(text)) return "READY_DEPARTURE";
   if (/hold\s+(?:position|short)|holding\s+short/.test(text)) return "HOLD_SHORT";
+  if (/request(?:ing)?\s+(?:(?:taxi(?:ing)?)\s+)?(?:(?:to|for)\s+)?(?:the\s+)?active\s+runway/.test(text)) return "REQUEST_TAXI";
   if (/request(?:ing)?\s+taxi|ready\s+to\s+taxi/.test(text)) return "REQUEST_TAXI";
   if (/contact\s+(?:seletar\s+)?tower|frequency\s+change/.test(text)) return "CONTACT_TOWER";
   return undefined;
@@ -137,7 +139,10 @@ export function validateTransmission(
   const fieldResults = clearance.requiredFields.map((field) => {
     const expected = expectedFor(field, clearance);
     const received = receivedFor(field, parsed);
-    return { field, expected, received, correct: valuesEqual(expected, received) };
+    const activeRunwayRequest = field === "RUNWAY"
+      && clearance.instructionType === "GROUND_CONTACT"
+      && received === "ACTIVE";
+    return { field, expected, received, correct: activeRunwayRequest || valuesEqual(expected, received) };
   });
   const incorrect = fieldResults.filter((result) => !result.correct);
 
