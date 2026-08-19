@@ -122,7 +122,7 @@ export function TrainerApp() {
   const [session, setSession] = useState<TrainerSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [connection, setConnection] = useState<"CONNECTED" | "WORKING" | "OFFLINE">("CONNECTED");
-  const [feedback, setFeedback] = useState<{ status: Validation["status"]; text: string; fields: string[] } | null>(null);
+  const [feedback, setFeedback] = useState<{ status: Validation["status"]; title?: string; text: string; fields: string[] } | null>(null);
   const [revealedTranscript, setRevealedTranscript] = useState<string | null>(null);
   const [hint, setHint] = useState<{ text: string; phrase: string } | null>(null);
   const [nudgeStateVersion, setNudgeStateVersion] = useState<number | null>(null);
@@ -329,9 +329,10 @@ export function TrainerApp() {
       setConnection(requestError.status === 409 ? "CONNECTED" : "OFFLINE");
       setFeedback({
         status: "CLARIFICATION_REQUIRED",
+        title: "Let’s try again",
         text: requestError.message === "TRANSCRIPTION_UNAVAILABLE"
-          ? "Voice transcription is not configured in this build. Use the text test console or add the server provider key."
-          : "We couldn’t process that transmission. Please transmit again.",
+          ? "I couldn’t transcribe that recording. Please hold to talk and try again when you’re ready."
+          : "That transmission didn’t come through. Please check your connection, then try again when you’re ready.",
         fields: [],
       });
     } finally {
@@ -606,7 +607,7 @@ export function TrainerApp() {
             <span className={`step-tag tag-${session.copy.tag.toLowerCase().replaceAll(" ", "-")}`}>{session.copy.tag}</span>
             <h2>{session.copy.title}</h2>
             <p>{session.copy.detail}</p>
-            {feedback && <div className={`feedback-card feedback-${feedback.status.toLowerCase()}`} role="status"><strong>{feedback.status === "ACCEPTED" ? "Nice work" : feedback.status === "CORRECTION_REQUIRED" ? "Almost there" : "No rush"}</strong><span>{feedback.text}</span></div>}
+            {feedback && <div className={`feedback-card feedback-${feedback.status.toLowerCase()}`} role="status"><strong>{feedback.title ?? (feedback.status === "ACCEPTED" ? "Nice work" : feedback.status === "CORRECTION_REQUIRED" ? "Almost there" : "No rush")}</strong><span>{feedback.text}</span></div>}
             {revealedTranscript && <div className="transcript-card"><span>ATC transcript</span><q>{revealedTranscript}</q></div>}
             {hint && <div className="phrase-tip"><span>Coaching hint</span><p>{hint.text}</p><q>{hint.phrase}</q></div>}
             {showNudge && !hint && <button className="nudge-button" onClick={() => void requestHint()}>Need a prompt? Show a hint</button>}

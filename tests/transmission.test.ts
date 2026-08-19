@@ -4,6 +4,7 @@ import { isSilentRecording } from "@/lib/audio";
 import { buildDebrief } from "@/lib/debrief";
 import { prepareSpeechText, speakFrequency, speakIdentifier, speakPosition } from "@/lib/phraseology";
 import { publicScenarioData, scenario } from "@/lib/scenario";
+import { createTranscriptionForm, DEFAULT_TRANSCRIPTION_MODEL } from "@/lib/transcription-request";
 import { correctionFor, parseTransmission, validateTransmission } from "@/lib/transmission";
 
 describe("WSSL scenario package", () => {
@@ -55,6 +56,16 @@ describe("WSSL scenario package", () => {
     expect(isSilentRecording("   ", 2)).toBe(true);
     expect(isSilentRecording("", 3)).toBe(false);
     expect(isSilentRecording("Whiskey Papa", 0)).toBe(false);
+  });
+
+  it("sends voice recordings with the supported transcription fields", () => {
+    const audio = new File(["voice"], "transmission.webm", { type: "audio/webm" });
+    const form = createTranscriptionForm(audio);
+
+    expect(form.get("model")).toBe(DEFAULT_TRANSCRIPTION_MODEL);
+    expect(form.get("language")).toBe("en");
+    expect(form.get("languages[]")).toBeNull();
+    expect(form.get("prompt")).toContain("Niner Victor Bravo Charlie Alpha");
   });
 });
 

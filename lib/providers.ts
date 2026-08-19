@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { prepareSpeechText } from "./phraseology";
+import { createTranscriptionForm, DEFAULT_TRANSCRIPTION_MODEL } from "./transcription-request";
 import { parseTransmission } from "./transmission";
 import { parsedTransmissionSchema, type ParsedTransmission, type ScenarioStep } from "./schemas";
 
@@ -25,10 +26,7 @@ export function providerStatus() {
 export async function transcribeAudio(audio: File) {
   const key = apiKey();
   if (!key) throw new Error("VOICE_PROVIDER_NOT_CONFIGURED");
-  const form = new FormData();
-  form.append("file", audio, audio.name || "transmission.webm");
-  form.append("model", config().OPENAI_STT_MODEL || "gpt-transcribe");
-  form.append("languages[]", "en");
+  const form = createTranscriptionForm(audio, config().OPENAI_STT_MODEL || DEFAULT_TRANSCRIPTION_MODEL);
   const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
     method: "POST",
     headers: { Authorization: `Bearer ${key}` },
