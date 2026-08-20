@@ -1,5 +1,13 @@
 {
   "version": "7",
-  "dialect": "sqlite",
-  "entries": []
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1787226841385,
+      "tag": "0000_fantastic_joseph",
+      "breakpoints": true
+    }
+  ]
 }

@@ -164,7 +164,7 @@ const fieldLabels: Record<ClearanceField, string> = {
   ACTION: "instruction",
 };
 
-function speakValue(value: string | string[]) {
+function speakValue(value: string | string[]): string {
   if (Array.isArray(value)) return value.map((item) => speakValue(item)).join(", then ");
   const replacements: Record<string, string> = {
     "9V-BCA": "9 Victor Bravo Charlie Alpha",

@@ -1,4 +1,3 @@
-import { env } from "cloudflare:workers";
 import { prepareSpeechText } from "./phraseology";
 import { createTranscriptionForm, DEFAULT_TRANSCRIPTION_MODEL } from "./transcription-request";
 import { parseTransmission } from "./transmission";
@@ -12,7 +11,7 @@ type RuntimeEnv = {
 };
 
 function config() {
-  return env as unknown as RuntimeEnv;
+  return process.env as RuntimeEnv;
 }
 
 function apiKey() {

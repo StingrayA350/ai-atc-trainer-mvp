@@ -13,6 +13,8 @@
 # testing
 /coverage
 /test-results/
+/playwright-report/
+/blob-report/
 /tmp/
 *.tsbuildinfo
 
@@ -23,6 +25,9 @@
 
 # misc
 .DS_Store
+.idea/
+.vscode/
+*.swp
 *.pem
 
 # debug
@@ -34,12 +39,16 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 .dev.vars*
+!.env.example
 !.dev.vars.example
 
 # vercel
 .vercel
 
 /dist/
+/.output/
+/.nitro/
+/.cache/
 /.wrangler/
 /outputs/
 /work/

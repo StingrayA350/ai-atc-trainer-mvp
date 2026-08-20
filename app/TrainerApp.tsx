@@ -322,9 +322,13 @@ export function TrainerApp() {
       const form = new FormData();
       form.append("requestId", requestId());
       form.append("stateVersion", String(session.stateVersion));
-      if (transcript?.trim()) form.append("transcript", transcript.trim());
+      const normalizedTranscript = transcript?.trim();
+      if (normalizedTranscript) form.append("transcript", normalizedTranscript);
       form.append("confidence", String(confidence));
-      if (audio?.size) form.append("audio", audio, "transmission.webm");
+      if (!normalizedTranscript && audio?.size) {
+        if (audio.size > 3_500_000) throw new Error("RECORDING_TOO_LARGE");
+        form.append("audio", audio, "transmission.webm");
+      }
       const data = await readJson(await fetch(`/api/sessions/${session.id}/transmissions`, { method: "POST", body: form }));
       const validation = data.validation as Validation;
       const incorrect = validation.fieldResults.filter((field) => !field.correct).map((field) => field.field.replaceAll("_", " ").toLowerCase());
@@ -348,7 +352,9 @@ export function TrainerApp() {
         title: "Let’s try again",
         text: requestError.message === "TRANSCRIPTION_UNAVAILABLE"
           ? "I couldn’t transcribe that recording. Please hold to talk and try again when you’re ready."
-          : "That transmission didn’t come through. Please check your connection, then try again when you’re ready.",
+          : requestError.message === "RECORDING_TOO_LARGE"
+            ? "That recording was too long to send. Please try again with a shorter transmission."
+            : "That transmission didn’t come through. Please check your connection, then try again when you’re ready.",
         fields: [],
       });
     } finally {
