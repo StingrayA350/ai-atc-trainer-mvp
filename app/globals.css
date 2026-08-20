@@ -77,7 +77,8 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
 .route-line.route-takeoff .route-core { stroke: #1c847a; }
 .route-line.route-line_up .route-core { stroke: #78a841; }
 @keyframes routeFlow { to { stroke-dashoffset: -28; } }
-.aircraft-marker { position: absolute; display: grid; justify-items: center; gap: 5px; transform: translate(-50%, -50%); transition: filter .2s; z-index: 4; pointer-events: none; }
+.aircraft-marker { position: absolute; transform: translate(-50%, -50%); transition: filter .2s; z-index: 4; pointer-events: none; }
+.aircraft-marker-content { display: grid; justify-items: center; gap: 5px; transform-origin: center; }
 .aircraft-marker i { width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; background: var(--navy); border: 3px solid #fff; color: var(--mint); font-style: normal; box-shadow: 0 4px 16px #041d1dcc; }
 .aircraft-marker b { background: var(--navy); color: #fff; padding: 5px 8px; border-radius: 5px; font-size: 9px; letter-spacing: .06em; }
 .aircraft-marker.in-motion i { animation: aircraftPulse 1s ease-in-out infinite alternate; }
@@ -85,9 +86,16 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
 .map-message { position: absolute; left: 16px; bottom: 16px; display: grid; gap: 3px; padding: 9px 13px; background: #ffffffeb; border: 1px solid #d7dcd5; border-radius: 8px; box-shadow: 0 5px 15px #1b2b251a; }
 .map-message span { font-size: 8px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 .map-message strong { font-size: 11px; }
-.route-locked { position: absolute; right: 16px; bottom: 16px; display: grid; gap: 3px; padding: 9px 13px; background: #0b2426e8; color: #fff; border-radius: 8px; box-shadow: 0 5px 15px #1b2b2530; }
-.route-locked span { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-.route-locked small { color: #bfcac5; font-size: 8px; }
+.route-locked { position: absolute; right: 16px; bottom: 16px; max-width: 240px; background: #0b2426ed; color: #fff; border-radius: 999px; box-shadow: 0 5px 15px #1b2b2530; overflow: hidden; z-index: 5; }
+.route-locked summary { min-height: 34px; display: flex; align-items: center; gap: 7px; padding: 7px 10px; cursor: pointer; list-style: none; }
+.route-locked summary::-webkit-details-marker { display: none; }
+.route-locked summary > span:first-child { flex: 0 0 auto; width: 17px; height: 17px; display: grid; place-items: center; border: 1px solid #9fb0ac; border-radius: 50%; color: var(--mint); font: 700 10px Georgia, serif; text-transform: none; }
+.route-locked summary strong { font-size: 9px; line-height: 1.2; text-transform: uppercase; letter-spacing: .07em; }
+.route-locked-toggle { flex: 0 0 auto; width: 6px; height: 6px; margin-left: 2px; border-right: 1.5px solid #bfcac5; border-bottom: 1.5px solid #bfcac5; transform: rotate(45deg) translateY(-2px); transition: transform .18s ease; }
+.route-locked[open] { border-radius: 10px; }
+.route-locked[open] .route-locked-toggle { transform: rotate(225deg) translate(-1px, -1px); }
+.route-locked p { margin: 0; padding: 0 12px 10px 34px; color: #cbd6d2; font-size: 8px; line-height: 1.45; }
+.mobile-route-help { display: none; }
 .attribution { margin: 8px 0 0; font-size: 8px; text-align: center; color: #7c8885; }
 
 .connected { color: #39772e !important; }
@@ -120,6 +128,9 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
 .ptt-area { display: grid; justify-items: center; padding: 12px 0 17px; }
 .ptt-button { width: 150px; height: 150px; border-radius: 50%; border: 9px solid #e6ecdf; background: var(--mint); color: #173017; display: grid; place-content: center; justify-items: center; gap: 5px; cursor: pointer; box-shadow: inset 0 -8px 0 #a6df70, 0 8px 24px #7eb34f30; transition: transform .18s; }
 .ptt-button { touch-action: none; }
+@media (hover: none) and (pointer: coarse) {
+  .ptt-button, .ptt-button * { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+}
 .ptt-button:hover { transform: translateY(-2px); }
 .ptt-button:active { transform: scale(.96); box-shadow: inset 0 5px 0 #8cc65c; }
 .ptt-button:disabled { cursor: not-allowed; filter: grayscale(.4); opacity: .68; transform: none; }
@@ -234,6 +245,16 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
   .flight-summary { display: none; }
   .map-panel { padding: 11px; min-height: 475px; }
   .chart-stage { min-height: 395px; }
+  .aircraft-marker-content { gap: 3px; }
+  .aircraft-marker i { width: 29px; height: 29px; border-width: 2px; font-size: 12px; }
+  .aircraft-marker b { padding: 3px 5px; font-size: 7px; letter-spacing: .035em; }
+  .route-locked { display: none; }
+  .mobile-route-help { position: absolute; right: 9px; bottom: 9px; z-index: 5; display: flex; align-items: flex-end; gap: 8px; }
+  .mobile-route-help-button { flex: 0 0 auto; width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid #536c6d; border-radius: 50%; background: #0b2426ed; color: var(--mint); box-shadow: 0 5px 15px #1b2b2530; cursor: pointer; }
+  .mobile-route-help-button span { font: 700 15px/1 Georgia, serif; }
+  .mobile-route-help-description { width: min(220px, calc(100vw - 88px)); padding: 10px 12px; border-radius: 10px; background: #0b2426ed; color: #fff; box-shadow: 0 5px 15px #1b2b2530; animation: mobileRouteHelpVisibility 2s ease forwards; pointer-events: none; }
+  .mobile-route-help-description strong { display: block; font-size: 9px; line-height: 1.2; text-transform: uppercase; letter-spacing: .07em; }
+  .mobile-route-help-description p { margin: 5px 0 0; color: #cbd6d2; font-size: 8px; line-height: 1.45; }
   .map-toolbar small { display: none; }
   .radio-panel { display: block; }
   .instruction-card h2 { font-size: 23px; }
@@ -253,6 +274,12 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
   .debrief-actions { align-items: stretch; flex-direction: column; gap: 13px; text-align: center; }
 }
 
+@keyframes mobileRouteHelpVisibility {
+  0%, 72% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *:before, *:after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .mobile-route-help-description { animation: none !important; }
 }

@@ -134,6 +134,7 @@ export function TrainerApp() {
   const [loading, setLoading] = useState(true);
   const [connection, setConnection] = useState<"CONNECTED" | "WORKING" | "OFFLINE">("CONNECTED");
   const [feedback, setFeedback] = useState<{ status: Validation["status"]; title?: string; text: string; fields: string[] } | null>(null);
+  const [userTranscript, setUserTranscript] = useState<string | null>(null);
   const [revealedTranscript, setRevealedTranscript] = useState<string | null>(null);
   const [hint, setHint] = useState<{ text: string; phrase: string } | null>(null);
   const [nudgeStateVersion, setNudgeStateVersion] = useState<number | null>(null);
@@ -149,6 +150,7 @@ export function TrainerApp() {
   const [textInput, setTextInput] = useState("");
   const [debrief, setDebrief] = useState<Debrief | null>(null);
   const [showAbout, setShowAbout] = useState(false);
+  const [mobileRouteHelpVisible, setMobileRouteHelpVisible] = useState(false);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
@@ -165,11 +167,26 @@ export function TrainerApp() {
   const focusedRouteRef = useRef<string | null>(null);
   const dragRef = useRef<{ x: number; y: number; camera: MapCamera } | null>(null);
   const stateActionInFlightRef = useRef(false);
+  const mobileRouteHelpTimerRef = useRef<number | null>(null);
+
+  const revealMobileRouteHelp = useCallback(() => {
+    if (mobileRouteHelpTimerRef.current !== null) window.clearTimeout(mobileRouteHelpTimerRef.current);
+    setMobileRouteHelpVisible(true);
+    mobileRouteHelpTimerRef.current = window.setTimeout(() => {
+      setMobileRouteHelpVisible(false);
+      mobileRouteHelpTimerRef.current = null;
+    }, 2_000);
+  }, []);
+
+  useEffect(() => () => {
+    if (mobileRouteHelpTimerRef.current !== null) window.clearTimeout(mobileRouteHelpTimerRef.current);
+  }, []);
 
   const createNewSession = useCallback(async () => {
     setLoading(true);
     setFeedback(null);
     setHint(null);
+    setUserTranscript(null);
     setRevealedTranscript(null);
     setDebrief(null);
     try {
@@ -341,6 +358,7 @@ export function TrainerApp() {
             : `Almost there — check your ${incorrect.join(", ")}, then try again when you’re ready.`,
         fields: incorrect,
       });
+      setUserTranscript(typeof data.transcript === "string" ? data.transcript : normalizedTranscript ?? null);
       setTextInput("");
       applyResponse(data);
     } catch (error) {
@@ -681,11 +699,38 @@ export function TrainerApp() {
                 ))}
               </svg>
               <span className={`aircraft-marker ${moving ? "in-motion" : ""}`} style={{ left: `${displayedAircraftPosition[0]}%`, top: `${displayedAircraftPosition[1]}%` }} aria-label="Aircraft position">
-                <i>✦</i><b>{session.scenario.aircraft.spokenCallsign}</b>
+                <span className="aircraft-marker-content" style={{ transform: `scale(${1 / mapCamera.zoom})` }}>
+                  <i>✦</i><b>{session.scenario.aircraft.spokenCallsign}</b>
+                </span>
               </span>
             </div>
             <div className="map-message"><span>Position</span><strong>{moving ? "Moving on accepted route" : positionLabel(session)}</strong></div>
-            {routes.length === 0 && <div className="route-locked"><span>Route appears after your readback</span><small>Take your time — help is available</small></div>}
+            {routes.length === 0 && (
+              <>
+                <details className="route-locked" onPointerDown={(event) => event.stopPropagation()}>
+                  <summary><span aria-hidden="true">i</span><strong>Route after readback</strong><span className="route-locked-toggle" aria-hidden="true" /></summary>
+                  <p>The accepted route appears after your readback. Take your time — help is available.</p>
+                </details>
+                <div className="mobile-route-help" onPointerDown={(event) => event.stopPropagation()}>
+                  {mobileRouteHelpVisible && (
+                    <div id="mobile-route-help-description" className="mobile-route-help-description" role="status">
+                      <strong>Route after readback</strong>
+                      <p>The accepted route appears after your readback. Take your time — help is available.</p>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    className="mobile-route-help-button"
+                    aria-label="Explain when the route appears"
+                    aria-expanded={mobileRouteHelpVisible}
+                    aria-controls="mobile-route-help-description"
+                    onClick={revealMobileRouteHelp}
+                  >
+                    <span aria-hidden="true">i</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
           <p className="attribution">© Civil Aviation Authority of Singapore · AD-2-WSSL-ADC-1-1 · Licensed training prototype</p>
         </section>
@@ -701,6 +746,7 @@ export function TrainerApp() {
             <h2>{session.copy.title}</h2>
             <p>{session.copy.detail}</p>
             {feedback && <div className={`feedback-card feedback-${feedback.status.toLowerCase()}`} role="status"><strong>{feedback.title ?? (feedback.status === "ACCEPTED" ? "Nice work" : feedback.status === "CORRECTION_REQUIRED" ? "Almost there" : "No rush")}</strong><span>{feedback.text}</span></div>}
+            {userTranscript && <div className="transcript-card"><span>User transcript</span><q>{userTranscript}</q></div>}
             {revealedTranscript && <div className="transcript-card"><span>ATC transcript</span><q>{revealedTranscript}</q></div>}
             {hint && <div className="phrase-tip"><span>Coaching hint</span><p>{hint.text}</p><q>{hint.phrase}</q></div>}
             {showNudge && !hint && <button className="nudge-button" onClick={() => void requestHint()}>Need a prompt? Show a hint</button>}
