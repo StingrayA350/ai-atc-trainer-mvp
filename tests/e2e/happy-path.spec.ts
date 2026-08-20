@@ -49,12 +49,14 @@ test("sends only one say-again request for rapid repeat clicks", async ({ page }
   await expect(page.getByText("The exercise updated at the same moment. Please try again.")).toHaveCount(0);
 });
 
-test("uploads a mobile recording with its real container after release outside the button", async ({ page }) => {
+test("uploads mobile audio and plays the delayed controller reply after release", async ({ page }) => {
   let session: Record<string, unknown> | undefined;
   let uploadedBody = "";
 
   await page.addInitScript(() => {
     const track = { stop() {} };
+    const audioTest = { resumeCalls: 0, sourceStarts: 0 };
+    Object.defineProperty(window, "__controllerAudioTest", { configurable: true, value: audioTest });
     Object.defineProperty(navigator, "mediaDevices", {
       configurable: true,
       value: { getUserMedia: async () => ({ getTracks: () => [track] }) },
@@ -81,8 +83,54 @@ test("uploads a mobile recording with its real container after release outside t
       }
     }
 
+    class FakeAudioContext {
+      state: AudioContextState = "suspended";
+      destination = {};
+
+      resume() {
+        audioTest.resumeCalls += 1;
+        this.state = "running";
+        return Promise.resolve();
+      }
+
+      close() {
+        this.state = "closed";
+        return Promise.resolve();
+      }
+
+      createAnalyser() {
+        return {
+          fftSize: 512,
+          getByteTimeDomainData(samples: Uint8Array) { samples.fill(128); },
+        };
+      }
+
+      createMediaStreamSource() {
+        return { connect() {} };
+      }
+
+      decodeAudioData() {
+        return Promise.resolve({});
+      }
+
+      createBufferSource() {
+        const source = {
+          buffer: null,
+          playbackRate: { value: 1 },
+          onended: null as (() => void) | null,
+          connect() {},
+          stop() {},
+          start() {
+            audioTest.sourceStarts += 1;
+            queueMicrotask(() => source.onended?.());
+          },
+        };
+        return source;
+      }
+    }
+
     Object.defineProperty(window, "MediaRecorder", { configurable: true, value: FakeMediaRecorder });
-    Object.defineProperty(window, "AudioContext", { configurable: true, value: undefined });
+    Object.defineProperty(window, "AudioContext", { configurable: true, value: FakeAudioContext });
   });
 
   await page.route(/\/api\/sessions$/, async (route) => {
@@ -93,6 +141,7 @@ test("uploads a mobile recording with its real container after release outside t
   });
   await page.route("**/api/sessions/*/transmissions", async (route) => {
     uploadedBody = route.request().postDataBuffer()?.toString("utf8") ?? "";
+    await new Promise((resolve) => setTimeout(resolve, 50));
     await route.fulfill({
       status: 200,
       contentType: "application/json",
@@ -100,6 +149,11 @@ test("uploads a mobile recording with its real container after release outside t
         session,
         transcript: phrases[0],
         validation: { status: "ACCEPTED", fieldResults: [] },
+        controllerReply: {
+          text: "Taxi to holding point Whiskey One.",
+          audioDataUrl: "data:audio/mpeg;base64,AAAA",
+          playbackRate: 1,
+        },
       },
     });
   });
@@ -115,6 +169,9 @@ test("uploads a mobile recording with its real container after release outside t
     clientY: 100,
   });
   await expect(page.getByRole("button", { name: "Release to send" })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => (
+    window as unknown as Window & { __controllerAudioTest: { resumeCalls: number } }
+  ).__controllerAudioTest.resumeCalls)).toBeGreaterThan(0);
   await page.locator("body").dispatchEvent("pointerup", {
     pointerId: 7,
     pointerType: "touch",
@@ -126,4 +183,7 @@ test("uploads a mobile recording with its real container after release outside t
 
   await expect.poll(() => uploadedBody).toContain('filename="transmission.mp4"');
   expect(uploadedBody).toContain("Content-Type: audio/mp4;codecs=mp4a.40.2");
+  await expect.poll(() => page.evaluate(() => (
+    window as unknown as Window & { __controllerAudioTest: { sourceStarts: number } }
+  ).__controllerAudioTest.sourceStarts)).toBe(1);
 });

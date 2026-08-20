@@ -171,6 +171,9 @@ export function TrainerApp() {
   const confidenceRef = useRef(0.99);
   const chunksRef = useRef<Blob[]>([]);
   const audioMonitorRef = useRef<AudioMonitor | null>(null);
+  const controllerAudioContextRef = useRef<AudioContext | null>(null);
+  const controllerAudioSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const controllerPlaybackRef = useRef(false);
   const recordingIntentRef = useRef(false);
   const recordingCancelledRef = useRef(false);
   const pttPointerRef = useRef<{ pointerId: number; x: number; y: number } | null>(null);
@@ -193,6 +196,14 @@ export function TrainerApp() {
 
   useEffect(() => () => {
     if (mobileRouteHelpTimerRef.current !== null) window.clearTimeout(mobileRouteHelpTimerRef.current);
+  }, []);
+
+  useEffect(() => () => {
+    try { controllerAudioSourceRef.current?.stop(); } catch { /* source already ended */ }
+    controllerAudioSourceRef.current = null;
+    const context = controllerAudioContextRef.current;
+    controllerAudioContextRef.current = null;
+    if (context && context.state !== "closed") void context.close();
   }, []);
 
   const createNewSession = useCallback(async () => {
@@ -243,30 +254,93 @@ export function TrainerApp() {
     return () => window.clearTimeout(timer);
   }, [session?.stateVersion, session?.currentStep, moving, session?.completed]);
 
+  const unlockControllerAudio = useCallback(() => {
+    const audioWindow = window as unknown as {
+      AudioContext?: typeof AudioContext;
+      webkitAudioContext?: typeof AudioContext;
+    };
+    const AudioContextConstructor = audioWindow.AudioContext ?? audioWindow.webkitAudioContext;
+    if (!AudioContextConstructor) return null;
+
+    try {
+      const current = controllerAudioContextRef.current;
+      const context = current && current.state !== "closed" ? current : new AudioContextConstructor();
+      controllerAudioContextRef.current = context;
+      if (context.state === "suspended") void context.resume().catch(() => { /* HTML audio remains available */ });
+      return context;
+    } catch {
+      return null;
+    }
+  }, []);
+
+  const playControllerWithWebAudio = useCallback(async (audioDataUrl: string, playbackRate: number) => {
+    const context = unlockControllerAudio();
+    if (!context) throw new Error("WEB_AUDIO_UNAVAILABLE");
+    if (context.state === "suspended") await context.resume();
+    const encodedAudio = await fetch(audioDataUrl);
+    if (!encodedAudio.ok) throw new Error("CONTROLLER_AUDIO_UNAVAILABLE");
+    const buffer = await context.decodeAudioData(await encodedAudio.arrayBuffer());
+
+    try { controllerAudioSourceRef.current?.stop(); } catch { /* source already ended */ }
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.playbackRate.value = playbackRate;
+    source.connect(context.destination);
+    controllerAudioSourceRef.current = source;
+    await new Promise<void>((resolve) => {
+      source.onended = () => {
+        if (controllerAudioSourceRef.current === source) controllerAudioSourceRef.current = null;
+        resolve();
+      };
+      source.start();
+    });
+  }, [unlockControllerAudio]);
+
+  const playControllerWithAudioElement = useCallback(async (audioDataUrl: string, playbackRate: number) => {
+    const audio = new Audio(audioDataUrl);
+    audio.playbackRate = playbackRate;
+    await new Promise<void>((resolve, reject) => {
+      audio.onended = () => resolve();
+      audio.onerror = () => reject(new Error("CONTROLLER_AUDIO_UNAVAILABLE"));
+      void audio.play().catch(reject);
+    });
+  }, []);
+
+  const speakControllerText = useCallback(async (text: string, playbackRate: number) => {
+    if (!("speechSynthesis" in window)) return;
+    await new Promise<void>((resolve) => {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = Math.min(1, playbackRate * 0.92);
+      utterance.pitch = 0.82;
+      utterance.onend = () => resolve();
+      utterance.onerror = () => resolve();
+      window.speechSynthesis.speak(utterance);
+    });
+  }, []);
+
   const playController = useCallback(async (reply?: ControllerReply | null) => {
     if (!reply?.text) return;
+    controllerPlaybackRef.current = true;
     setAudioState("PLAYING");
     try {
       if (reply.audioDataUrl) {
-        const audio = new Audio(reply.audioDataUrl);
-        audio.playbackRate = reply.playbackRate;
-        await audio.play();
-        await new Promise<void>((resolve) => { audio.onended = () => resolve(); audio.onerror = () => resolve(); });
-      } else if ("speechSynthesis" in window) {
-        await new Promise<void>((resolve) => {
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(reply.text);
-          utterance.rate = Math.min(1, reply.playbackRate * 0.92);
-          utterance.pitch = 0.82;
-          utterance.onend = () => resolve();
-          utterance.onerror = () => resolve();
-          window.speechSynthesis.speak(utterance);
-        });
+        try {
+          await playControllerWithWebAudio(reply.audioDataUrl, reply.playbackRate);
+          return;
+        } catch {
+          try {
+            await playControllerWithAudioElement(reply.audioDataUrl, reply.playbackRate);
+            return;
+          } catch { /* speech synthesis is the final fallback */ }
+        }
       }
+      await speakControllerText(reply.text, reply.playbackRate);
     } finally {
+      controllerPlaybackRef.current = false;
       setAudioState("READY");
     }
-  }, []);
+  }, [playControllerWithAudioElement, playControllerWithWebAudio, speakControllerText]);
 
   const applyResponse = useCallback((data: { session: TrainerSession; controllerReply?: ControllerReply | null }) => {
     setSession(data.session);
@@ -276,6 +350,7 @@ export function TrainerApp() {
 
   const postStateAction = useCallback(async (path: string) => {
     if (!session || stateActionInFlightRef.current) return null;
+    unlockControllerAudio();
     stateActionInFlightRef.current = true;
     setConnection("WORKING");
     try {
@@ -301,7 +376,7 @@ export function TrainerApp() {
     } finally {
       stateActionInFlightRef.current = false;
     }
-  }, [session, applyResponse]);
+  }, [session, applyResponse, unlockControllerAudio]);
 
   useEffect(() => {
     if (!session?.movementRouteId) {
@@ -343,6 +418,7 @@ export function TrainerApp() {
 
   const submitTransmission = useCallback(async (transcript?: string, audio?: Blob, confidence = 0.99) => {
     if (!session || moving || audioState === "PROCESSING") return;
+    unlockControllerAudio();
     setAudioState("PROCESSING");
     setConnection("WORKING");
     setFeedback(null);
@@ -389,9 +465,9 @@ export function TrainerApp() {
         fields: [],
       });
     } finally {
-      setAudioState("READY");
+      if (!controllerPlaybackRef.current) setAudioState("READY");
     }
-  }, [session, moving, audioState, applyResponse]);
+  }, [session, moving, audioState, applyResponse, unlockControllerAudio]);
 
   const startRecording = useCallback(async () => {
     if (!session?.currentStep || moving || audioState !== "READY") return;
@@ -519,13 +595,14 @@ export function TrainerApp() {
 
   const beginRecording = useCallback(() => {
     if (!session?.currentStep || moving || audioState !== "READY") return;
+    unlockControllerAudio();
     recordingIntentRef.current = true;
     recordingCancelledRef.current = false;
     setDragToCancel(false);
     setPttMessage(null);
     setAudioState("RECORDING");
     void startRecording();
-  }, [session?.currentStep, moving, audioState, startRecording]);
+  }, [session?.currentStep, moving, audioState, startRecording, unlockControllerAudio]);
 
   const finishPointerRecording = useCallback((pointerId: number, clientX: number, clientY: number) => {
     const start = pttPointerRef.current;
