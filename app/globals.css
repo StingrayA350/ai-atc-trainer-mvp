@@ -62,10 +62,12 @@ button:focus-visible { outline: 3px solid #75b8ff; outline-offset: 3px; }
 .map-toolbar small { font-size: 10px; color: var(--muted); margin-left: 7px; }
 .map-actions { display: flex; background: #fff; border: 1px solid #d7dcd5; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px #24403712; }
 .map-actions button { min-width: 34px; height: 31px; border: 0; border-right: 1px solid #e3e7e2; background: #fff; color: #40504d; font-size: 11px; cursor: pointer; }
+.map-actions .map-mode-button { min-width: auto; padding: 0 10px; color: #315f51; font-size: 9px; font-weight: 800; }
 .map-actions button:last-child { border: 0; }
-.chart-stage { min-height: 480px; position: relative; overflow: hidden; touch-action: none; user-select: none; cursor: grab; background: #fff; border: 1px solid #d6dcd5; border-radius: 13px; box-shadow: 0 15px 35px #2a413715; }
+.chart-stage { min-height: 480px; position: relative; overflow: hidden; touch-action: none; user-select: none; cursor: grab; background: #e5e9e3; border: 1px solid #d6dcd5; border-radius: 13px; box-shadow: 0 15px 35px #2a413715; }
 .chart-stage:active { cursor: grabbing; }
-.map-canvas { position: absolute; width: 100%; aspect-ratio: 1230 / 1405; left: 50%; top: 50%; transform-origin: center; will-change: transform; }
+.map-canvas { position: absolute; width: 100%; aspect-ratio: 1230 / 1405; left: 50%; top: 50%; transform-origin: center; transition: transform .22s ease-out; will-change: transform; }
+.chart-stage.is-dragging .map-canvas { transition: none; }
 .map-canvas > img { width: 100%; height: 100%; display: block; object-fit: fill; filter: sepia(.06) contrast(.91) brightness(1.03); opacity: .91; pointer-events: none; }
 .chart-stage:after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 80px #20352c1a; pointer-events: none; }
 .route-overlay { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }

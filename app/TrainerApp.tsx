@@ -2,6 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isSilentRecording } from "@/lib/audio";
+import {
+  FULL_MAP_BOUNDS,
+  OPERATIONAL_MAP_BOUNDS,
+  cameraForRoute,
+  clampMapCamera,
+  draggedMapCamera,
+  mapCameraOffset,
+  resetMapCamera,
+  type MapCamera,
+  type MapSize,
+} from "@/lib/map-camera";
 import { speakIdentifier, speakPosition } from "@/lib/phraseology";
 
 type Point = [number, number];
@@ -131,8 +142,10 @@ export function TrainerApp() {
   const [pttMessage, setPttMessage] = useState<string | null>(null);
   const [moving, setMoving] = useState(false);
   const [aircraftPosition, setAircraftPosition] = useState<Point>([50, 50]);
-  const [zoom, setZoom] = useState(1.08);
-  const [offset, setOffset] = useState({ x: 0, y: 4 });
+  const [mapMode, setMapMode] = useState<"OPERATIONAL" | "FULL">("OPERATIONAL");
+  const [mapCamera, setMapCamera] = useState<MapCamera>({ zoom: 1.35, centerX: 0.415, centerY: 0.53 });
+  const [mapStageSize, setMapStageSize] = useState<MapSize>({ width: 0, height: 0 });
+  const [mapDragging, setMapDragging] = useState(false);
   const [textInput, setTextInput] = useState("");
   const [debrief, setDebrief] = useState<Debrief | null>(null);
   const [showAbout, setShowAbout] = useState(false);
@@ -147,7 +160,10 @@ export function TrainerApp() {
   const recordingCancelledRef = useRef(false);
   const pttPointerRef = useRef<{ pointerId: number; x: number; y: number } | null>(null);
   const animatedVersions = useRef(new Set<string>());
-  const dragRef = useRef<{ x: number; y: number; startX: number; startY: number } | null>(null);
+  const mapStageRef = useRef<HTMLDivElement | null>(null);
+  const mapCameraInitializedRef = useRef(false);
+  const focusedRouteRef = useRef<string | null>(null);
+  const dragRef = useRef<{ x: number; y: number; camera: MapCamera } | null>(null);
   const stateActionInFlightRef = useRef(false);
 
   const createNewSession = useCallback(async () => {
@@ -501,6 +517,44 @@ export function TrainerApp() {
     ? session.visibleRouteIds.map((id) => session.scenario.routes[id]).filter(Boolean)
     : [], [session]);
 
+  const mapBounds = mapMode === "OPERATIONAL" ? OPERATIONAL_MAP_BOUNDS : FULL_MAP_BOUNDS;
+  const latestRoute = routes.at(-1);
+
+  useEffect(() => {
+    focusedRouteRef.current = null;
+    mapCameraInitializedRef.current = false;
+  }, [session?.id]);
+
+  useEffect(() => {
+    const stage = mapStageRef.current;
+    if (!stage) return;
+    const updateSize = () => setMapStageSize({ width: stage.clientWidth, height: stage.clientHeight });
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [loading, session?.id, session?.completed, debrief]);
+
+  useEffect(() => {
+    if (mapStageSize.width <= 0 || mapStageSize.height <= 0) return;
+    setMapCamera((current) => {
+      if (!mapCameraInitializedRef.current) {
+        mapCameraInitializedRef.current = true;
+        return resetMapCamera(mapStageSize, mapBounds);
+      }
+      return clampMapCamera(current, mapStageSize, mapBounds);
+    });
+  }, [mapStageSize, mapBounds, session?.id]);
+
+  useEffect(() => {
+    if (!latestRoute || mapStageSize.width <= 0 || mapStageSize.height <= 0 || !session) return;
+    const focusKey = `${session.id}:${latestRoute.id}`;
+    if (focusedRouteRef.current === focusKey) return;
+    focusedRouteRef.current = focusKey;
+    setMapMode("OPERATIONAL");
+    setMapCamera(cameraForRoute(latestRoute.points, mapStageSize, OPERATIONAL_MAP_BOUNDS));
+  }, [latestRoute, mapStageSize, session]);
+
   const journey = useMemo(() => session ? [
     [`At ${formatPositionId(session.scenario.startPositionId)}`, "Contact Ground"],
     ["Taxi clearance", `Read back ${session.scenario.taxiways.map(speakIdentifier).join(" / ")}`],
@@ -531,6 +585,22 @@ export function TrainerApp() {
   const displayedAircraftPosition = !moving && !session.movementRouteId
     ? restoredPosition(session)
     : aircraftPosition;
+  const mapOffset = mapCameraOffset(mapCamera, mapStageSize);
+  const resetMapView = () => setMapCamera(resetMapCamera(mapStageSize, mapBounds));
+  const changeMapZoom = (change: number) => {
+    setMapCamera((current) => clampMapCamera({ ...current, zoom: current.zoom + change }, mapStageSize, mapBounds));
+  };
+  const toggleMapMode = () => {
+    const nextMode = mapMode === "OPERATIONAL" ? "FULL" : "OPERATIONAL";
+    const nextBounds = nextMode === "OPERATIONAL" ? OPERATIONAL_MAP_BOUNDS : FULL_MAP_BOUNDS;
+    setMapMode(nextMode);
+    setMapCamera(resetMapCamera(mapStageSize, nextBounds));
+  };
+  const finishMapDrag = () => {
+    dragRef.current = null;
+    setMapDragging(false);
+    setMapCamera((current) => clampMapCamera(current, mapStageSize, mapBounds));
+  };
 
   return (
     <main className="trainer-shell">
@@ -565,19 +635,36 @@ export function TrainerApp() {
           <div className="map-toolbar">
             <div><span className="live-dot" /><strong>WSSL · Seletar</strong><small>{moving ? "Aircraft moving" : "Official aerodrome chart"}</small></div>
             <div className="map-actions" aria-label="Map controls">
-              <button onClick={() => setZoom((value) => Math.max(.8, value - .15))} aria-label="Zoom out">−</button>
-              <button onClick={() => { setZoom(1.08); setOffset({ x: 0, y: 4 }); }} aria-label="Reset zoom">{Math.round(zoom * 100)}%</button>
-              <button onClick={() => setZoom((value) => Math.min(2.2, value + .15))} aria-label="Zoom in">+</button>
+              <button className="map-mode-button" onClick={toggleMapMode} aria-label={mapMode === "OPERATIONAL" ? "Show full chart" : "Show operational area"}>{mapMode === "OPERATIONAL" ? "Full chart" : "Focus area"}</button>
+              <button onClick={() => changeMapZoom(-.15)} aria-label="Zoom out">−</button>
+              <button onClick={resetMapView} aria-label={`Reset ${mapMode === "OPERATIONAL" ? "operational" : "full chart"} view`}>{Math.round(mapCamera.zoom * 100)}%</button>
+              <button onClick={() => changeMapZoom(.15)} aria-label="Zoom in">+</button>
             </div>
           </div>
           <div
-            className={`chart-stage ${moving ? "is-moving" : ""}`}
-            onWheel={(event) => { event.preventDefault(); setZoom((value) => Math.max(.8, Math.min(2.2, value + (event.deltaY < 0 ? .1 : -.1)))); }}
-            onPointerDown={(event) => { dragRef.current = { x: event.clientX, y: event.clientY, startX: offset.x, startY: offset.y }; event.currentTarget.setPointerCapture(event.pointerId); }}
-            onPointerMove={(event) => { if (!dragRef.current) return; setOffset({ x: dragRef.current.startX + event.clientX - dragRef.current.x, y: dragRef.current.startY + event.clientY - dragRef.current.y }); }}
-            onPointerUp={() => { dragRef.current = null; }}
+            ref={mapStageRef}
+            className={`chart-stage ${moving ? "is-moving" : ""} ${mapDragging ? "is-dragging" : ""}`}
+            onWheel={(event) => { event.preventDefault(); changeMapZoom(event.deltaY < 0 ? .1 : -.1); }}
+            onPointerDown={(event) => {
+              dragRef.current = { x: event.clientX, y: event.clientY, camera: mapCamera };
+              setMapDragging(true);
+              event.currentTarget.setPointerCapture(event.pointerId);
+            }}
+            onPointerMove={(event) => {
+              if (!dragRef.current) return;
+              setMapCamera(draggedMapCamera(
+                dragRef.current.camera,
+                event.clientX - dragRef.current.x,
+                event.clientY - dragRef.current.y,
+                mapStageSize,
+                mapBounds,
+                mapMode === "OPERATIONAL",
+              ));
+            }}
+            onPointerUp={finishMapDrag}
+            onPointerCancel={finishMapDrag}
           >
-            <div className="map-canvas" style={{ transform: `translate(calc(-50% + ${offset.x}px), calc(-50% + ${offset.y}px)) scale(${zoom})` }}>
+            <div className="map-canvas" style={{ transform: `translate(calc(-50% + ${mapOffset.x}px), calc(-50% + ${mapOffset.y}px)) scale(${mapCamera.zoom})` }}>
               <img src="/wssl-chart-map.png" alt="Seletar Airport official aerodrome chart" draggable={false} />
               <svg className="route-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-label="Accepted route overlay">
                 {routes.map((route) => (
