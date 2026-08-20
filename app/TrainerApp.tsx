@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { isSilentRecording } from "@/lib/audio";
+import { isSilentRecording, recordingFileName } from "@/lib/audio";
 import {
   FULL_MAP_BOUNDS,
   OPERATIONAL_MAP_BOUNDS,
@@ -85,6 +85,19 @@ type AudioMonitor = {
 };
 
 const DRAG_TO_CANCEL_DISTANCE = 70;
+const RECORDING_MIME_TYPES = [
+  "audio/webm;codecs=opus",
+  "audio/mp4;codecs=mp4a.40.2",
+  "audio/mp4",
+  "audio/webm",
+];
+
+function createAudioRecorder(stream: MediaStream) {
+  const mimeType = typeof MediaRecorder.isTypeSupported === "function"
+    ? RECORDING_MIME_TYPES.find((candidate) => MediaRecorder.isTypeSupported(candidate))
+    : undefined;
+  return mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+}
 
 function requestId() {
   return crypto.randomUUID();
@@ -344,7 +357,7 @@ export function TrainerApp() {
       form.append("confidence", String(confidence));
       if (!normalizedTranscript && audio?.size) {
         if (audio.size > 3_500_000) throw new Error("RECORDING_TOO_LARGE");
-        form.append("audio", audio, "transmission.webm");
+        form.append("audio", audio, recordingFileName(audio.type));
       }
       const data = await readJson(await fetch(`/api/sessions/${session.id}/transmissions`, { method: "POST", body: form }));
       const validation = data.validation as Validation;
@@ -394,7 +407,7 @@ export function TrainerApp() {
         return;
       }
       streamRef.current = stream;
-      const recorder = new MediaRecorder(stream);
+      const recorder = createAudioRecorder(stream);
       recorderRef.current = recorder;
       recorder.ondataavailable = (event) => { if (event.data.size) chunksRef.current.push(event.data); };
       recorder.onstop = () => {
@@ -405,12 +418,16 @@ export function TrainerApp() {
           void monitor.context.close();
           audioMonitorRef.current = null;
         }
-        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || "audio/webm" });
+        const chunkMimeType = chunksRef.current.find((chunk) => chunk.type)?.type;
+        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || chunkMimeType || "audio/webm" });
         stream.getTracks().forEach((track) => track.stop());
         streamRef.current = null;
         recorderRef.current = null;
         const wasCancelled = recordingCancelledRef.current;
-        const wasSilent = isSilentRecording(spokenRef.current, activeFrames);
+        const browserTranscript = session.provider === "LOCAL_DEMO" ? spokenRef.current : "";
+        const wasSilent = blob.size === 0 || (
+          session.provider === "LOCAL_DEMO" && isSilentRecording(browserTranscript, activeFrames)
+        );
         setDragToCancel(false);
         if (wasCancelled || wasSilent) {
           chunksRef.current = [];
@@ -420,7 +437,7 @@ export function TrainerApp() {
             : "No speech detected — recording cancelled.");
           return;
         }
-        void submitTransmission(spokenRef.current, blob, confidenceRef.current);
+        void submitTransmission(browserTranscript, blob, confidenceRef.current);
       };
 
       const audioWindow = window as unknown as {
@@ -448,28 +465,30 @@ export function TrainerApp() {
         audioMonitorRef.current = monitor;
         sampleAudio();
       }
-      const speechWindow = window as unknown as {
-        SpeechRecognition?: new () => BrowserSpeechRecognition;
-        webkitSpeechRecognition?: new () => BrowserSpeechRecognition;
-      };
-      const Recognition = speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
-      if (Recognition) {
-        const recognition = new Recognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = "en-SG";
-        recognition.onresult = (event) => {
-          let transcript = "";
-          let confidence = 0.99;
-          for (let i = 0; i < event.results.length; i += 1) {
-            transcript += `${event.results[i][0].transcript} `;
-            if (event.results[i].isFinal) confidence = event.results[i][0].confidence || confidence;
-          }
-          spokenRef.current = transcript.trim();
-          confidenceRef.current = confidence;
+      if (session.provider === "LOCAL_DEMO") {
+        const speechWindow = window as unknown as {
+          SpeechRecognition?: new () => BrowserSpeechRecognition;
+          webkitSpeechRecognition?: new () => BrowserSpeechRecognition;
         };
-        recognitionRef.current = recognition;
-        recognition.start();
+        const Recognition = speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
+        if (Recognition) {
+          const recognition = new Recognition();
+          recognition.continuous = true;
+          recognition.interimResults = true;
+          recognition.lang = "en-SG";
+          recognition.onresult = (event) => {
+            let transcript = "";
+            let confidence = 0.99;
+            for (let i = 0; i < event.results.length; i += 1) {
+              transcript += `${event.results[i][0].transcript} `;
+              if (event.results[i].isFinal) confidence = event.results[i][0].confidence || confidence;
+            }
+            spokenRef.current = transcript.trim();
+            confidenceRef.current = confidence;
+          };
+          recognitionRef.current = recognition;
+          recognition.start();
+        }
       }
       recorder.start(100);
       setAudioState("RECORDING");
@@ -488,7 +507,7 @@ export function TrainerApp() {
       setDragToCancel(false);
       setFeedback({ status: "CLARIFICATION_REQUIRED", text: "Microphone access is required for push-to-talk. You can still use the text test console.", fields: [] });
     }
-  }, [session?.currentStep, moving, audioState, submitTransmission]);
+  }, [session?.currentStep, session?.provider, moving, audioState, submitTransmission]);
 
   const stopRecording = useCallback((cancel = false) => {
     recordingIntentRef.current = false;
@@ -504,8 +523,27 @@ export function TrainerApp() {
     recordingCancelledRef.current = false;
     setDragToCancel(false);
     setPttMessage(null);
+    setAudioState("RECORDING");
     void startRecording();
   }, [session?.currentStep, moving, audioState, startRecording]);
+
+  const finishPointerRecording = useCallback((pointerId: number, clientX: number, clientY: number) => {
+    const start = pttPointerRef.current;
+    if (!start || start.pointerId !== pointerId) return;
+    const shouldCancel = Math.hypot(clientX - start.x, clientY - start.y) >= DRAG_TO_CANCEL_DISTANCE;
+    pttPointerRef.current = null;
+    stopRecording(shouldCancel);
+  }, [stopRecording]);
+
+  useEffect(() => {
+    const finish = (event: PointerEvent) => finishPointerRecording(event.pointerId, event.clientX, event.clientY);
+    window.addEventListener("pointerup", finish);
+    window.addEventListener("pointercancel", finish);
+    return () => {
+      window.removeEventListener("pointerup", finish);
+      window.removeEventListener("pointercancel", finish);
+    };
+  }, [finishPointerRecording]);
 
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
@@ -758,8 +796,10 @@ export function TrainerApp() {
               aria-label={audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : "Hold to talk"}
               disabled={isDisabled}
               onPointerDown={(event) => {
+                if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+                event.preventDefault();
                 pttPointerRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
-                event.currentTarget.setPointerCapture(event.pointerId);
+                try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* window listeners provide the fallback */ }
                 beginRecording();
               }}
               onPointerMove={(event) => {
@@ -768,15 +808,15 @@ export function TrainerApp() {
                 setDragToCancel(Math.hypot(event.clientX - start.x, event.clientY - start.y) >= DRAG_TO_CANCEL_DISTANCE);
               }}
               onPointerUp={(event) => {
-                const start = pttPointerRef.current;
-                const shouldCancel = Boolean(start && Math.hypot(event.clientX - start.x, event.clientY - start.y) >= DRAG_TO_CANCEL_DISTANCE);
-                pttPointerRef.current = null;
-                stopRecording(shouldCancel);
+                finishPointerRecording(event.pointerId, event.clientX, event.clientY);
               }}
-              onPointerCancel={() => {
-                pttPointerRef.current = null;
-                stopRecording(true);
+              onPointerCancel={(event) => {
+                finishPointerRecording(event.pointerId, event.clientX, event.clientY);
               }}
+              onLostPointerCapture={(event) => {
+                finishPointerRecording(event.pointerId, event.clientX, event.clientY);
+              }}
+              onContextMenu={(event) => event.preventDefault()}
             >
               <span className="mic-glyph" aria-hidden="true">●</span>
               <strong>{audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : moving ? "Aircraft moving" : audioState === "PROCESSING" ? "Checking readback" : audioState === "PLAYING" ? "ATC speaking" : "Hold to talk"}</strong>

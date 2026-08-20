@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import evaluationData from "@/data/evaluation-cases.v1.json";
-import { isSilentRecording } from "@/lib/audio";
+import { isSilentRecording, recordingFileName } from "@/lib/audio";
 import { buildDebrief } from "@/lib/debrief";
 import { prepareSpeechText, speakFrequency, speakIdentifier, speakPosition } from "@/lib/phraseology";
 import { publicScenarioData, scenario } from "@/lib/scenario";
@@ -66,6 +66,13 @@ describe("WSSL scenario package", () => {
     expect(form.get("language")).toBe("en");
     expect(form.get("languages[]")).toBeNull();
     expect(form.get("prompt")).toContain("Niner Victor Bravo Charlie Alpha");
+  });
+
+  it("preserves the browser recording container in the uploaded filename", () => {
+    expect(recordingFileName("audio/webm;codecs=opus")).toBe("transmission.webm");
+    expect(recordingFileName("audio/mp4;codecs=mp4a.40.2")).toBe("transmission.mp4");
+    expect(recordingFileName("audio/x-m4a")).toBe("transmission.m4a");
+    expect(recordingFileName("audio/ogg;codecs=opus")).toBe("transmission.ogg");
   });
 });
 
