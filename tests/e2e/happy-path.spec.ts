@@ -54,12 +54,22 @@ test("uploads mobile audio and plays the delayed controller reply after release"
   let uploadedBody = "";
 
   await page.addInitScript(() => {
-    const track = { stop() {} };
-    const audioTest = { resumeCalls: 0, sourceStarts: 0 };
+    const track = {
+      kind: "audio",
+      readyState: "live",
+      stop() { this.readyState = "ended"; },
+    };
+    const audioTest = { getUserMediaCalls: 0, recorderStarts: 0, resumeCalls: 0, sourceStarts: 0 };
     Object.defineProperty(window, "__controllerAudioTest", { configurable: true, value: audioTest });
     Object.defineProperty(navigator, "mediaDevices", {
       configurable: true,
-      value: { getUserMedia: async () => ({ getTracks: () => [track] }) },
+      value: {
+        getUserMedia: async () => {
+          audioTest.getUserMediaCalls += 1;
+          await new Promise((resolve) => setTimeout(resolve, 75));
+          return { getTracks: () => [track] };
+        },
+      },
     });
 
     class FakeMediaRecorder {
@@ -73,6 +83,7 @@ test("uploads mobile audio and plays the delayed controller reply after release"
       onstop: (() => void) | null = null;
 
       start() {
+        audioTest.recorderStarts += 1;
         this.state = "recording";
       }
 
@@ -168,6 +179,10 @@ test("uploads mobile audio and plays the delayed controller reply after release"
     clientX: 100,
     clientY: 100,
   });
+  await expect(page.getByRole("button", { name: "Starting microphone" })).toBeVisible();
+  expect(await page.evaluate(() => (
+    window as unknown as Window & { __controllerAudioTest: { recorderStarts: number } }
+  ).__controllerAudioTest.recorderStarts)).toBe(0);
   await expect(page.getByRole("button", { name: "Release to send" })).toBeVisible();
   await expect.poll(() => page.evaluate(() => (
     window as unknown as Window & { __controllerAudioTest: { resumeCalls: number } }
@@ -186,4 +201,27 @@ test("uploads mobile audio and plays the delayed controller reply after release"
   await expect.poll(() => page.evaluate(() => (
     window as unknown as Window & { __controllerAudioTest: { sourceStarts: number } }
   ).__controllerAudioTest.sourceStarts)).toBe(1);
+
+  await expect(page.getByRole("button", { name: "Hold to talk" })).toBeVisible();
+  await pushToTalk.dispatchEvent("pointerdown", {
+    pointerId: 8,
+    pointerType: "touch",
+    isPrimary: true,
+    button: 0,
+    clientX: 100,
+    clientY: 100,
+  });
+  expect(await page.evaluate(() => (
+    window as unknown as Window & {
+      __controllerAudioTest: { getUserMediaCalls: number; recorderStarts: number };
+    }
+  ).__controllerAudioTest)).toMatchObject({ getUserMediaCalls: 1, recorderStarts: 2 });
+  await page.locator("body").dispatchEvent("pointercancel", {
+    pointerId: 8,
+    pointerType: "touch",
+    isPrimary: true,
+    button: 0,
+    clientX: 200,
+    clientY: 200,
+  });
 });

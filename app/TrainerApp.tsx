@@ -151,7 +151,7 @@ export function TrainerApp() {
   const [revealedTranscript, setRevealedTranscript] = useState<string | null>(null);
   const [hint, setHint] = useState<{ text: string; phrase: string } | null>(null);
   const [nudgeStateVersion, setNudgeStateVersion] = useState<number | null>(null);
-  const [audioState, setAudioState] = useState<"READY" | "RECORDING" | "PROCESSING" | "PLAYING">("READY");
+  const [audioState, setAudioState] = useState<"READY" | "STARTING" | "RECORDING" | "PROCESSING" | "PLAYING">("READY");
   const [dragToCancel, setDragToCancel] = useState(false);
   const [pttMessage, setPttMessage] = useState<string | null>(null);
   const [moving, setMoving] = useState(false);
@@ -475,9 +475,16 @@ export function TrainerApp() {
       spokenRef.current = "";
       confidenceRef.current = 0.99;
       chunksRef.current = [];
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      let stream = streamRef.current;
+      let acquiredNewStream = false;
+      if (!stream?.getTracks().some((track) => track.kind === "audio" && track.readyState === "live")) {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+        });
+        acquiredNewStream = true;
+      }
       if (!recordingIntentRef.current) {
-        stream.getTracks().forEach((track) => track.stop());
+        if (acquiredNewStream) stream.getTracks().forEach((track) => track.stop());
         setAudioState("READY");
         if (recordingCancelledRef.current) setPttMessage("Recording cancelled — no transmission was sent.");
         return;
@@ -496,8 +503,6 @@ export function TrainerApp() {
         }
         const chunkMimeType = chunksRef.current.find((chunk) => chunk.type)?.type;
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || chunkMimeType || "audio/webm" });
-        stream.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
         recorderRef.current = null;
         const wasCancelled = recordingCancelledRef.current;
         const browserTranscript = session.provider === "LOCAL_DEMO" ? spokenRef.current : "";
@@ -600,7 +605,7 @@ export function TrainerApp() {
     recordingCancelledRef.current = false;
     setDragToCancel(false);
     setPttMessage(null);
-    setAudioState("RECORDING");
+    setAudioState("STARTING");
     void startRecording();
   }, [session?.currentStep, moving, audioState, startRecording, unlockControllerAudio]);
 
@@ -621,6 +626,27 @@ export function TrainerApp() {
       window.removeEventListener("pointercancel", finish);
     };
   }, [finishPointerRecording]);
+
+  const releaseMicrophone = useCallback((cancelRecording: boolean) => {
+    if (cancelRecording) stopRecording(true);
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+  }, [stopRecording]);
+
+  useEffect(() => {
+    const releaseWhenHidden = () => {
+      if (document.visibilityState === "hidden") releaseMicrophone(true);
+    };
+    document.addEventListener("visibilitychange", releaseWhenHidden);
+    return () => {
+      document.removeEventListener("visibilitychange", releaseWhenHidden);
+      releaseMicrophone(true);
+    };
+  }, [releaseMicrophone]);
+
+  useEffect(() => {
+    if (session?.completed) releaseMicrophone(false);
+  }, [session?.completed, releaseMicrophone]);
 
   useEffect(() => {
     const down = (event: KeyboardEvent) => {
@@ -870,7 +896,7 @@ export function TrainerApp() {
           <div className="ptt-area">
             <button
               className={`ptt-button ${audioState === "RECORDING" ? "recording" : ""} ${dragToCancel ? "cancel-ready" : ""}`}
-              aria-label={audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : "Hold to talk"}
+              aria-label={audioState === "STARTING" ? "Starting microphone" : audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : "Hold to talk"}
               disabled={isDisabled}
               onPointerDown={(event) => {
                 if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
@@ -896,8 +922,8 @@ export function TrainerApp() {
               onContextMenu={(event) => event.preventDefault()}
             >
               <span className="mic-glyph" aria-hidden="true">●</span>
-              <strong>{audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : moving ? "Aircraft moving" : audioState === "PROCESSING" ? "Checking readback" : audioState === "PLAYING" ? "ATC speaking" : "Hold to talk"}</strong>
-              <small>{audioState === "RECORDING" ? (dragToCancel ? "No transmission will be sent" : "Drag away to cancel") : audioState === "READY" ? "or hold Space" : audioState.toLowerCase()}</small>
+              <strong>{audioState === "STARTING" ? "Starting microphone" : audioState === "RECORDING" ? (dragToCancel ? "Release to cancel" : "Release to send") : moving ? "Aircraft moving" : audioState === "PROCESSING" ? "Checking readback" : audioState === "PLAYING" ? "ATC speaking" : "Hold to talk"}</strong>
+              <small>{audioState === "STARTING" ? "Keep holding — speak when ready" : audioState === "RECORDING" ? (dragToCancel ? "No transmission will be sent" : "Drag away to cancel") : audioState === "READY" ? "or hold Space" : audioState.toLowerCase()}</small>
             </button>
             <p role={pttMessage ? "status" : undefined}><span className="level-bars" aria-hidden="true">▂▄▆▄▂</span>{pttMessage ?? (session.provider === "OPENAI" ? "Secure voice provider ready" : "Browser voice · demo mode")}</p>
           </div>
